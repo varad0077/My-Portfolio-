@@ -1,0 +1,235 @@
+/* Studio Ghibli Theme Variables & Core Design System */
+
+:root {
+  /* Default Theme: Totoro Forest */
+  --bg-primary: #112217;
+  --bg-secondary: #1a3324;
+  --bg-card: rgba(26, 51, 36, 0.75);
+  --bg-card-hover: rgba(35, 66, 47, 0.9);
+  --accent-primary: #4ade80;
+  --accent-secondary: #facc15;
+  --accent-tertiary: #38bdf8;
+  --text-main: #f0fdf4;
+  --text-muted: #bbf7d0;
+  --border-color: rgba(74, 222, 128, 0.25);
+  --shadow-color: rgba(7, 28, 14, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glow-color: rgba(74, 222, 128, 0.3);
+  
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Nunito', sans-serif;
+  --font-title: 'Outfit', sans-serif;
+}
+
+[data-theme="howl"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: rgba(30, 41, 59, 0.75);
+  --bg-card-hover: rgba(51, 65, 85, 0.9);
+  --accent-primary: #38bdf8;
+  --accent-secondary: #fbbf24;
+  --accent-tertiary: #f472b6;
+  --text-main: #f0f9ff;
+  --text-muted: #bae6fd;
+  --border-color: rgba(56, 189, 248, 0.25);
+  --shadow-color: rgba(2, 6, 23, 0.6);
+  --glow-color: rgba(56, 189, 248, 0.3);
+}
+
+[data-theme="spirited"] {
+  --bg-primary: #1f1418;
+  --bg-secondary: #2f1d24;
+  --bg-card: rgba(47, 29, 36, 0.8);
+  --bg-card-hover: rgba(66, 40, 50, 0.92);
+  --accent-primary: #f59e0b;
+  --accent-secondary: #ef4444;
+  --accent-tertiary: #fbbf24;
+  --text-main: #fff7ed;
+  --text-muted: #fed7aa;
+  --border-color: rgba(245, 158, 11, 0.3);
+  --shadow-color: rgba(20, 10, 14, 0.65);
+  --glow-color: rgba(245, 158, 11, 0.35);
+}
+
+[data-theme="kiki"] {
+  --bg-primary: #181124;
+  --bg-secondary: #271a38;
+  --bg-card: rgba(39, 26, 56, 0.78);
+  --bg-card-hover: rgba(55, 38, 79, 0.92);
+  --accent-primary: #c084fc;
+  --accent-secondary: #fb923c;
+  --accent-tertiary: #38bdf8;
+  --text-main: #faf5ff;
+  --text-muted: #e9d5ff;
+  --border-color: rgba(192, 132, 252, 0.3);
+  --shadow-color: rgba(15, 8, 26, 0.65);
+  --glow-color: rgba(192, 132, 252, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  min-height: 100vh;
+}
+
+/* Typography Helpers */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+.font-title {
+  font-family: var(--font-title);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* Glassmorphism Card Style */
+.ghibli-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px var(--shadow-color);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ghibli-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-primary);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px var(--glow-color);
+}
+
+/* Ghibli Glow Button */
+.btn-ghibli {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #0f172a;
+  font-family: var(--font-title);
+  font-weight: 700;
+  padding: 0.8rem 1.6rem;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px var(--glow-color);
+}
+
+.btn-ghibli:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px var(--glow-color);
+  filter: brightness(1.1);
+}
+
+.btn-ghibli-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+  font-family: var(--font-title);
+  font-weight: 600;
+  padding: 0.8rem 1.6rem;
+  border-radius: 50px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.btn-ghibli-outline:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; filter: drop-shadow(0 0 8px var(--accent-primary)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 16px var(--accent-primary)); }
+}
+
+@keyframes leafSway {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+.animate-float {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s infinite;
+}
+
+.animate-sway {
+  animation: leafSway 4s ease-in-out infinite;
+}
+
+/* Section Title Highlight */
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--text-main), var(--accent-primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  display: inline-block;
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  text-align: center;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto 3rem auto;
+}
+
+/* Utility Containers */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
