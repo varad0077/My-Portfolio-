@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Download, Mail, Sparkles, Code, Heart, Coffee } from 'lucide-react';
+import { ArrowRight, Download, Mail } from 'lucide-react';
 import { profileData } from '../data/portfolioData';
 
 export const Hero = () => {
@@ -7,9 +7,9 @@ export const Hero = () => {
     <section
       id="hero"
       style={{
-        minHeight: '100vh',
-        paddingTop: '8rem',
-        paddingBottom: '4rem',
+        minHeight: '92vh',
+        paddingTop: '9rem',
+        paddingBottom: '5rem',
         display: 'flex',
         alignItems: 'center',
         position: 'relative'
@@ -20,36 +20,35 @@ export const Hero = () => {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '3rem',
+            gap: '4rem',
             alignItems: 'center'
           }}
         >
-          {/* Text Content */}
+          {/* Main Hero Content */}
           <div>
-            {/* Status Badge */}
+            {/* Minimal Status Badge */}
             <div
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.6rem',
-                background: 'rgba(74, 222, 128, 0.12)',
+                gap: '0.5rem',
+                background: 'rgba(139, 197, 164, 0.08)',
                 border: '1px solid var(--border-color)',
-                padding: '0.4rem 1rem',
-                borderRadius: '30px',
-                fontSize: '0.88rem',
+                padding: '0.35rem 0.9rem',
+                borderRadius: '20px',
+                fontSize: '0.82rem',
                 color: 'var(--accent-primary)',
-                fontWeight: 600,
-                marginBottom: '1.5rem',
+                fontWeight: 500,
+                marginBottom: '1.8rem',
                 backdropFilter: 'blur(8px)'
               }}
             >
               <span
                 style={{
-                  width: '8px',
-                  height: '8px',
+                  width: '6px',
+                  height: '6px',
                   borderRadius: '50%',
-                  backgroundColor: 'var(--accent-primary)',
-                  boxShadow: '0 0 10px var(--accent-primary)'
+                  backgroundColor: 'var(--accent-primary)'
                 }}
                 className="animate-pulse-glow"
               />
@@ -61,9 +60,10 @@ export const Hero = () => {
               style={{
                 fontSize: 'clamp(2.5rem, 5vw, 3.8rem)',
                 fontWeight: 800,
-                lineHeight: 1.15,
-                marginBottom: '1rem',
-                color: 'var(--text-main)'
+                lineHeight: 1.1,
+                marginBottom: '0.8rem',
+                color: 'var(--text-main)',
+                letterSpacing: '-0.03em'
               }}
             >
               Hi, I'm <span style={{ color: 'var(--accent-primary)' }}>{profileData.name}</span>
@@ -71,11 +71,12 @@ export const Hero = () => {
 
             <h2
               style={{
-                fontSize: 'clamp(1.2rem, 3vw, 1.8rem)',
+                fontSize: 'clamp(1.25rem, 2.5vw, 1.6rem)',
                 fontFamily: 'var(--font-title)',
                 color: 'var(--accent-secondary)',
                 fontWeight: 600,
-                marginBottom: '1.2rem'
+                marginBottom: '1.2rem',
+                letterSpacing: '-0.01em'
               }}
             >
               {profileData.title}
@@ -83,17 +84,17 @@ export const Hero = () => {
 
             <p
               style={{
-                fontSize: '1.1rem',
+                fontSize: '1.05rem',
                 color: 'var(--text-muted)',
                 lineHeight: 1.7,
                 marginBottom: '2.5rem',
-                maxWidth: '540px'
+                maxWidth: '520px'
               }}
             >
               {profileData.tagline}
             </p>
 
-            {/* Action CTAs */}
+            {/* 2 CTA Buttons */}
             <div
               style={{
                 display: 'flex',
@@ -103,12 +104,12 @@ export const Hero = () => {
               }}
             >
               <a href="#projects" className="btn-ghibli">
-                <span>Explore Projects</span>
-                <ArrowRight size={18} />
+                <span>View Projects</span>
+                <ArrowRight size={16} />
               </a>
 
               <a href="#contact" className="btn-ghibli-outline">
-                <Mail size={18} />
+                <Mail size={16} />
                 <span>Get In Touch</span>
               </a>
 
@@ -116,38 +117,38 @@ export const Hero = () => {
                 href={profileData.resumeUrl}
                 download
                 className="btn-ghibli-outline"
-                style={{ padding: '0.8rem 1.2rem' }}
+                style={{ padding: '0.75rem 1rem' }}
                 title="Download Resume PDF"
               >
-                <Download size={18} />
+                <Download size={16} />
               </a>
             </div>
 
-            {/* Quick Stats Grid */}
+            {/* Statistics */}
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))',
-                gap: '1rem',
-                background: 'rgba(255, 255, 255, 0.03)',
-                padding: '1.2rem',
-                borderRadius: '20px',
-                border: '1px solid var(--glass-border)'
+                gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+                gap: '1.5rem',
+                paddingTop: '1.5rem',
+                borderTop: '1px solid var(--border-color)',
+                maxWidth: '480px'
               }}
             >
               {profileData.stats.map((st, idx) => (
-                <div key={idx} style={{ textAlign: 'center' }}>
+                <div key={idx}>
                   <div
                     style={{
-                      fontSize: '1.5rem',
+                      fontSize: '1.6rem',
                       fontWeight: 800,
-                      color: 'var(--accent-primary)',
-                      fontFamily: 'var(--font-title)'
+                      color: 'var(--text-main)',
+                      fontFamily: 'var(--font-title)',
+                      letterSpacing: '-0.02em'
                     }}
                   >
                     {st.value}
                   </div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                  <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '0.1rem' }}>
                     {st.label}
                   </div>
                 </div>
@@ -155,67 +156,45 @@ export const Hero = () => {
             </div>
           </div>
 
-          {/* Ghibli Visual Frame */}
+          {/* Clean Blended Artwork Frame */}
           <div style={{ position: 'relative' }}>
             <div
               className="ghibli-card animate-float"
               style={{
-                padding: '1rem',
+                padding: '0.8rem',
                 position: 'relative',
                 overflow: 'hidden',
-                borderRadius: '28px'
+                borderRadius: '24px',
+                background: 'var(--bg-card)'
               }}
             >
-              <img
-                src="/assets/hero_art.png"
-                alt="Studio Ghibli Scenery Artwork"
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  borderRadius: '20px',
-                  display: 'block',
-                  boxShadow: '0 10px 30px var(--shadow-color)'
-                }}
-              />
-              
-              {/* Floating Story Overlay Tag */}
               <div
                 style={{
-                  position: 'absolute',
-                  bottom: '1.8rem',
-                  left: '1.8rem',
-                  right: '1.8rem',
-                  background: 'rgba(15, 23, 42, 0.75)',
-                  backdropFilter: 'blur(12px)',
-                  padding: '1rem 1.2rem',
-                  borderRadius: '16px',
-                  border: '1px solid var(--border-color)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.8rem'
+                  position: 'relative',
+                  borderRadius: '18px',
+                  overflow: 'hidden'
                 }}
               >
+                <img
+                  src="/assets/hero_art.png"
+                  alt="Portfolio Art Illustration"
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    borderRadius: '18px',
+                    display: 'block',
+                    filter: 'saturate(0.7) brightness(0.85)',
+                    transition: 'filter 0.3s ease'
+                  }}
+                />
                 <div
                   style={{
-                    background: 'var(--accent-primary)',
-                    color: '#0f172a',
-                    padding: '0.5rem',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(180deg, rgba(15, 23, 32, 0.1) 0%, rgba(15, 23, 32, 0.5) 100%)',
+                    pointerEvents: 'none'
                   }}
-                >
-                  <Sparkles size={18} />
-                </div>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#ffffff' }}>
-                    Ghibli-Inspired Craft
-                  </div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                    {profileData.location}
-                  </div>
-                </div>
+                />
               </div>
             </div>
           </div>
@@ -224,3 +203,4 @@ export const Hero = () => {
     </section>
   );
 };
+

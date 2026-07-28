@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Leaf, Menu, X, Sparkles, Sun, Moon, Cloud, Flame } from 'lucide-react';
+import { Leaf, Menu, X, Sparkles, Volume2, VolumeX } from 'lucide-react';
 import { AudioPlayer } from './AudioPlayer';
 
-export const Navbar = ({ currentTheme, setTheme }) => {
+export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,37 +14,30 @@ export const Navbar = ({ currentTheme, setTheme }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const themes = [
-    { id: 'totoro', label: "Totoro's Forest", icon: Leaf, color: '#4ade80' },
-    { id: 'howl', label: "Howl's Sky", icon: Cloud, color: '#38bdf8' },
-    { id: 'spirited', label: "Spirited Night", icon: Flame, color: '#f59e0b' },
-    { id: 'kiki', label: "Kiki's Sunset", icon: Sparkles, color: '#c084fc' }
-  ];
-
   return (
-    <nav
+    <header
       style={{
         position: 'fixed',
-        top: '1rem',
+        top: '1.2rem',
         left: '50%',
         transform: 'translateX(-50%)',
         width: '90%',
-        maxWidth: '1200px',
+        maxWidth: '1140px',
         zIndex: 100,
-        padding: isScrolled ? '0.75rem 1.5rem' : '1rem 2rem',
-        background: isScrolled ? 'var(--bg-card)' : 'rgba(26, 51, 36, 0.4)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
+        padding: isScrolled ? '0.7rem 1.4rem' : '0.9rem 1.6rem',
+        background: isScrolled ? 'rgba(15, 23, 32, 0.88)' : 'rgba(24, 36, 45, 0.55)',
+        backdropFilter: 'blur(18px)',
+        WebkitBackdropFilter: 'blur(18px)',
         border: '1px solid var(--border-color)',
-        borderRadius: '50px',
-        boxShadow: isScrolled ? '0 10px 30px var(--shadow-color)' : 'none',
-        transition: 'all 0.4s ease',
+        borderRadius: '16px',
+        boxShadow: isScrolled ? '0 12px 32px rgba(0, 0, 0, 0.35)' : '0 4px 20px rgba(0, 0, 0, 0.15)',
+        transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between'
       }}
     >
-      {/* Brand Logo */}
+      {/* Minimal Brand Logo */}
       <a
         href="#"
         style={{
@@ -54,116 +46,49 @@ export const Navbar = ({ currentTheme, setTheme }) => {
           gap: '0.6rem',
           textDecoration: 'none',
           color: 'var(--text-main)',
-          fontWeight: 800,
-          fontSize: '1.25rem',
+          fontWeight: 700,
+          fontSize: '1.1rem',
           fontFamily: 'var(--font-title)'
         }}
       >
         <div
           style={{
-            width: '36px',
-            height: '36px',
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))',
+            width: '32px',
+            height: '32px',
+            borderRadius: '10px',
+            background: 'linear-gradient(135deg, #8BC5A4 0%, #76AB8B 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#0f172a',
-            boxShadow: '0 0 12px var(--glow-color)'
+            color: '#0F1720'
           }}
-          className="animate-sway"
         >
-          <Leaf size={20} />
+          <Leaf size={18} />
         </div>
         <span>
-          Varad <span style={{ color: 'var(--accent-primary)', fontSize: '0.9rem' }}>✦ Ghibli Code</span>
+          Varad <span style={{ color: 'var(--accent-primary)', fontSize: '0.85rem', fontWeight: 500 }}>✦ Portfolio</span>
         </span>
       </a>
 
       {/* Desktop Navigation Links */}
-      <div
+      <nav
         className="desktop-links"
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '1.8rem'
+          gap: '2rem'
         }}
       >
         <a href="#about" className="nav-link">About</a>
-        <a href="#skills" className="nav-link">Tech Garden</a>
+        <a href="#skills" className="nav-link">Tech Stack</a>
         <a href="#projects" className="nav-link">Projects</a>
-        <a href="#timeline" className="nav-link">Journey</a>
+        <a href="#timeline" className="nav-link">Experience</a>
         <a href="#contact" className="nav-link">Contact</a>
-      </div>
+      </nav>
 
-      {/* Right Tools (Audio Player + Theme Switcher) */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      {/* Right Controls (Audio Ambience Player) */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
         <AudioPlayer />
-
-        {/* Theme Dropdown */}
-        <div style={{ position: 'relative' }}>
-          <button
-            onClick={() => setThemeDropdownOpen(!themeDropdownOpen)}
-            className="btn-ghibli-outline"
-            style={{
-              padding: '0.5rem 0.9rem',
-              fontSize: '0.85rem',
-              borderRadius: '20px'
-            }}
-          >
-            <Sparkles size={15} style={{ color: 'var(--accent-secondary)' }} />
-            <span style={{ textTransform: 'capitalize' }}>{currentTheme} Theme</span>
-          </button>
-
-          {themeDropdownOpen && (
-            <div
-              style={{
-                position: 'absolute',
-                top: '120%',
-                right: 0,
-                width: '180px',
-                background: 'var(--bg-secondary)',
-                border: '1px solid var(--border-color)',
-                borderRadius: '16px',
-                padding: '0.5rem',
-                boxShadow: '0 10px 25px var(--shadow-color)',
-                backdropFilter: 'blur(12px)',
-                zIndex: 110
-              }}
-            >
-              {themes.map((t) => {
-                const IconComponent = t.icon;
-                return (
-                  <button
-                    key={t.id}
-                    onClick={() => {
-                      setTheme(t.id);
-                      setThemeDropdownOpen(false);
-                    }}
-                    style={{
-                      width: '100%',
-                      padding: '0.6rem 0.8rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.6rem',
-                      background: currentTheme === t.id ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
-                      border: 'none',
-                      borderRadius: '10px',
-                      color: 'var(--text-main)',
-                      cursor: 'pointer',
-                      fontSize: '0.88rem',
-                      textAlign: 'left',
-                      transition: 'background 0.2s ease'
-                    }}
-                  >
-                    <IconComponent size={16} style={{ color: t.color }} />
-                    <span>{t.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          )}
-        </div>
 
         {/* Mobile Hamburger Toggle */}
         <button
@@ -178,7 +103,7 @@ export const Navbar = ({ currentTheme, setTheme }) => {
             display: 'none'
           }}
         >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
@@ -186,14 +111,14 @@ export const Navbar = ({ currentTheme, setTheme }) => {
         .nav-link {
           color: var(--text-muted);
           text-decoration: none;
-          font-weight: 600;
+          font-weight: 500;
           font-family: var(--font-title);
-          font-size: 0.95rem;
-          transition: all 0.2s ease;
+          font-size: 0.92rem;
+          transition: color 0.2s ease;
           position: relative;
         }
         .nav-link:hover {
-          color: var(--accent-primary);
+          color: var(--text-main);
         }
         .nav-link::after {
           content: '';
@@ -201,10 +126,9 @@ export const Navbar = ({ currentTheme, setTheme }) => {
           bottom: -4px;
           left: 0;
           width: 0%;
-          height: 2px;
+          height: 1.5px;
           background: var(--accent-primary);
-          transition: width 0.3s ease;
-          border-radius: 2px;
+          transition: width 0.25s ease;
         }
         .nav-link:hover::after {
           width: 100%;
@@ -218,6 +142,7 @@ export const Navbar = ({ currentTheme, setTheme }) => {
           }
         }
       `}</style>
-    </nav>
+    </header>
   );
 };
+
