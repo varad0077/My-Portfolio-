@@ -38,33 +38,49 @@ export const GhibliCanvas = () => {
 
     const particles = [];
 
-    // 1. Glowing Ambient Sage Spores
-    for (let i = 0; i < 12; i++) {
+    // 1. Translucent Anime Water Bubbles
+    for (let i = 0; i < 10; i++) {
       particles.push({
-        type: 'spore',
+        type: 'bubble',
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
-        size: Math.random() * 2.5 + 1.2,
-        speedX: (Math.random() - 0.5) * 0.25,
-        speedY: -Math.random() * 0.25 - 0.08,
-        alpha: Math.random() * 0.35 + 0.15,
-        pulseSpeed: Math.random() * 0.02 + 0.008,
+        radius: Math.random() * 12 + 8, // 8px to 20px bubble radius
+        speedX: (Math.random() - 0.5) * 0.2,
+        speedY: -Math.random() * 0.4 - 0.15, // float upward
+        wobbleSpeed: Math.random() * 0.03 + 0.01,
+        alpha: Math.random() * 0.2 + 0.15,
         offset: Math.random() * Math.PI * 2
       });
     }
 
-    // 2. High-Definition Faded Ghibli Soot Sprites (Susuwatari)
-    for (let i = 0; i < 7; i++) {
+    // 2. Ghibli Kodama (Tree Spirits)
+    for (let i = 0; i < 5; i++) {
+      particles.push({
+        type: 'kodama',
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        scale: Math.random() * 0.3 + 0.85, // 0.85 to 1.15 scale
+        speedX: (Math.random() - 0.5) * 0.2,
+        speedY: -Math.random() * 0.2 - 0.05,
+        tiltAngle: (Math.random() - 0.5) * 0.3,
+        tiltSpeed: Math.random() * 0.02 + 0.008,
+        alpha: Math.random() * 0.12 + 0.22,
+        offset: Math.random() * Math.PI * 2
+      });
+    }
+
+    // 3. Organic Ghibli Soot Sprites (Susuwatari)
+    for (let i = 0; i < 5; i++) {
       particles.push({
         type: 'soot',
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
-        size: Math.random() * 8 + 16, // 16px to 24px crisp radius
-        speedX: (Math.random() - 0.5) * 0.35,
-        speedY: (Math.random() - 0.5) * 0.35 - 0.1,
-        fadeAlpha: Math.random() * 0.12 + 0.22, // Faded background opacity (0.22 to 0.34)
-        blinkTimer: Math.random() * 220 + 120,
-        floatOffset: Math.random() * Math.PI * 2
+        radius: Math.random() * 6 + 14, // 14px to 20px
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3 - 0.1,
+        alpha: Math.random() * 0.1 + 0.25,
+        blinkTimer: Math.random() * 240 + 120,
+        offset: Math.random() * Math.PI * 2
       });
     }
 
@@ -79,73 +95,144 @@ export const GhibliCanvas = () => {
 
       particles.forEach((p) => {
         p.x += p.speedX;
-        p.y += p.speedY + Math.sin(time + p.floatOffset) * 0.15;
+        p.y += p.speedY;
 
-        // Interactive mouse avoidance
+        // Interactive mouse push
         if (mouse.active) {
           const dx = mouse.x - p.x;
           const dy = mouse.y - p.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 140) {
-            const force = (140 - dist) / 140;
-            p.x -= (dx / dist) * force * (p.type === 'soot' ? 1.5 : 0.8);
-            p.y -= (dy / dist) * force * (p.type === 'soot' ? 1.5 : 0.8);
+          if (dist < 150) {
+            const force = (150 - dist) / 150;
+            p.x -= (dx / dist) * force * 1.5;
+            p.y -= (dy / dist) * force * 1.5;
           }
         }
 
         // Screen boundary wrapping
-        if (p.x < -40) p.x = width + 40;
-        if (p.x > width + 40) p.x = -40;
-        if (p.y < -40) p.y = height + 40;
-        if (p.y > height + 40) p.y = -40;
+        if (p.x < -50) p.x = width + 50;
+        if (p.x > width + 50) p.x = -50;
+        if (p.y < -50) p.y = height + 50;
+        if (p.y > height + 50) p.y = -50;
 
-        if (p.type === 'spore') {
-          // Soft ambient sage spore
-          const currentAlpha = p.alpha + Math.sin(time * p.pulseSpeed + p.offset) * 0.1;
+        // ----------------------------------------------------
+        // RENDER 1: Translucent Anime Water Bubbles
+        // ----------------------------------------------------
+        if (p.type === 'bubble') {
+          p.x += Math.sin(time * 2 + p.offset) * 0.25; // bubble horizontal wobble
+
           ctx.save();
+          ctx.globalAlpha = p.alpha;
+
+          const r = p.radius;
+
+          // Bubble Body Outer Ring (Sage/Teal Translucent)
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(139, 197, 164, ${Math.max(0.08, currentAlpha)})`;
+          ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(139, 197, 164, 0.06)';
           ctx.fill();
+          ctx.strokeStyle = 'rgba(201, 216, 197, 0.45)';
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+
+          // Top-Left Curved Highlight Glint
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, r * 0.72, Math.PI * 1.15, Math.PI * 1.65);
+          ctx.strokeStyle = 'rgba(245, 245, 243, 0.8)';
+          ctx.lineWidth = 1.6;
+          ctx.lineCap = 'round';
+          ctx.stroke();
+
+          // Bottom-Right Secondary Glint Dot
+          ctx.beginPath();
+          ctx.arc(p.x + r * 0.45, p.y + r * 0.45, r * 0.12, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(245, 245, 243, 0.6)';
+          ctx.fill();
+
           ctx.restore();
-        } else if (p.type === 'soot') {
-          // 4K High-Definition Ghibli Soot Sprite (Faded Background Character)
+        }
+
+        // ----------------------------------------------------
+        // RENDER 2: Authentic Ghibli Kodama Spirit
+        // ----------------------------------------------------
+        else if (p.type === 'kodama') {
           ctx.save();
-          ctx.globalAlpha = p.fadeAlpha;
+          ctx.globalAlpha = p.alpha;
 
-          const r = p.size;
+          const s = p.scale;
+          const headW = 16 * s;
+          const headH = 14 * s;
+          const currentTilt = Math.sin(time + p.offset) * 0.12;
 
-          // Outer Soft Glow
+          ctx.translate(p.x, p.y);
+          ctx.rotate(currentTilt);
+
+          // Kodama Head (Oval, slightly irregular anime shape)
           ctx.beginPath();
-          ctx.arc(p.x, p.y, r * 1.25, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(24, 36, 45, 0.4)';
+          ctx.ellipse(0, 0, headW, headH, 0.1, 0, Math.PI * 2);
+          ctx.fillStyle = '#C9D8C5'; // soft sage-white
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(24, 36, 45, 0.2)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          // Kodama Body (Small pear shape below head)
+          ctx.beginPath();
+          ctx.ellipse(0, headH * 0.9, headW * 0.55, headH * 0.75, 0, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(201, 216, 197, 0.85)';
           ctx.fill();
 
-          // Fluffy Spiky Rays (Crisp vector-style Susuwatari spikes)
-          ctx.strokeStyle = '#1d2c38';
-          ctx.lineWidth = 1.8;
-          const spikeCount = 14;
-          for (let a = 0; a < Math.PI * 2; a += (Math.PI * 2) / spikeCount) {
-            const spikeLen = r + 3.5 + Math.sin(time * 3 + a + p.x) * 1.5;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p.x + Math.cos(a) * spikeLen, p.y + Math.sin(a) * spikeLen);
-            ctx.stroke();
-          }
+          // Asymmetric Anime Eyes (Dark hollow dots)
+          ctx.beginPath();
+          ctx.arc(-headW * 0.35, -headH * 0.1, 2.4 * s, 0, Math.PI * 2);
+          ctx.fillStyle = '#18242D';
+          ctx.fill();
 
-          // Main Body Circle
+          ctx.beginPath();
+          ctx.arc(headW * 0.35, -headH * 0.05, 2.8 * s, 0, Math.PI * 2);
+          ctx.fillStyle = '#18242D';
+          ctx.fill();
+
+          // Tiny Mouth Dot
+          ctx.beginPath();
+          ctx.arc(headW * 0.05, headH * 0.35, 1.8 * s, 0, Math.PI * 2);
+          ctx.fillStyle = '#18242D';
+          ctx.fill();
+
+          ctx.restore();
+        }
+
+        // ----------------------------------------------------
+        // RENDER 3: Organic Organic Soot Sprite (Susuwatari)
+        // ----------------------------------------------------
+        else if (p.type === 'soot') {
+          ctx.save();
+          ctx.globalAlpha = p.alpha;
+
+          const r = p.radius;
+
+          // Organic Fuzzy Body made of overlapping soft circles
           ctx.beginPath();
           ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
           ctx.fillStyle = '#18242D';
           ctx.fill();
-          ctx.strokeStyle = 'rgba(139, 197, 164, 0.15)';
-          ctx.lineWidth = 1;
-          ctx.stroke();
 
-          // Cute Big Expressive Eyes
-          const eyeDistance = r * 0.42;
-          const eyeRadius = r * 0.35;
-          const eyeY = p.y - r * 0.1;
+          // Outer Fluffy Puff Blobs (Realistic hand-drawn fuzz)
+          const puffCount = 12;
+          for (let a = 0; a < Math.PI * 2; a += (Math.PI * 2) / puffCount) {
+            const puffDist = r * 0.85 + Math.sin(time * 3 + a + p.x) * 1.5;
+            const px = p.x + Math.cos(a) * puffDist;
+            const py = p.y + Math.sin(a) * puffDist;
+            ctx.beginPath();
+            ctx.arc(px, py, r * 0.35, 0, Math.PI * 2);
+            ctx.fillStyle = '#18242D';
+            ctx.fill();
+          }
+
+          // Large Anime Eyes
+          const eyeDist = r * 0.42;
+          const eyeR = r * 0.38;
+          const eyeY = p.y - r * 0.08;
 
           // Blink Logic
           p.blinkTimer -= 1;
@@ -155,40 +242,28 @@ export const GhibliCanvas = () => {
           }
 
           if (!isBlinking) {
-            // Left Eye (White)
+            // Left Eye
             ctx.beginPath();
-            ctx.arc(p.x - eyeDistance, eyeY, eyeRadius, 0, Math.PI * 2);
+            ctx.arc(p.x - eyeDist, eyeY, eyeR, 0, Math.PI * 2);
             ctx.fillStyle = '#F5F5F3';
             ctx.fill();
 
-            // Left Pupil (Dark + Pupil Shine)
+            // Left Pupil
             ctx.beginPath();
-            ctx.arc(p.x - eyeDistance + 0.8, eyeY, eyeRadius * 0.5, 0, Math.PI * 2);
+            ctx.arc(p.x - eyeDist + 0.6, eyeY, eyeR * 0.52, 0, Math.PI * 2);
             ctx.fillStyle = '#0F1720';
             ctx.fill();
 
-            // Left Eye Catchlight Shine
+            // Right Eye
             ctx.beginPath();
-            ctx.arc(p.x - eyeDistance - eyeRadius * 0.25, eyeY - eyeRadius * 0.25, eyeRadius * 0.2, 0, Math.PI * 2);
-            ctx.fillStyle = '#FFFFFF';
-            ctx.fill();
-
-            // Right Eye (White)
-            ctx.beginPath();
-            ctx.arc(p.x + eyeDistance, eyeY, eyeRadius, 0, Math.PI * 2);
+            ctx.arc(p.x + eyeDist, eyeY, eyeR, 0, Math.PI * 2);
             ctx.fillStyle = '#F5F5F3';
             ctx.fill();
 
-            // Right Pupil (Dark + Pupil Shine)
+            // Right Pupil
             ctx.beginPath();
-            ctx.arc(p.x + eyeDistance + 0.8, eyeY, eyeRadius * 0.5, 0, Math.PI * 2);
+            ctx.arc(p.x + eyeDist + 0.6, eyeY, eyeR * 0.52, 0, Math.PI * 2);
             ctx.fillStyle = '#0F1720';
-            ctx.fill();
-
-            // Right Eye Catchlight Shine
-            ctx.beginPath();
-            ctx.arc(p.x + eyeDistance - eyeRadius * 0.25, eyeY - eyeRadius * 0.25, eyeRadius * 0.2, 0, Math.PI * 2);
-            ctx.fillStyle = '#FFFFFF';
             ctx.fill();
           } else {
             // Cute Blink Curve Lines
@@ -197,11 +272,11 @@ export const GhibliCanvas = () => {
             ctx.lineCap = 'round';
 
             ctx.beginPath();
-            ctx.arc(p.x - eyeDistance, eyeY, eyeRadius * 0.8, 0, Math.PI);
+            ctx.arc(p.x - eyeDist, eyeY, eyeR * 0.8, 0, Math.PI);
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.arc(p.x + eyeDistance, eyeY, eyeRadius * 0.8, 0, Math.PI);
+            ctx.arc(p.x + eyeDist, eyeY, eyeR * 0.8, 0, Math.PI);
             ctx.stroke();
           }
 
@@ -236,6 +311,7 @@ export const GhibliCanvas = () => {
     />
   );
 };
+
 
 
 
