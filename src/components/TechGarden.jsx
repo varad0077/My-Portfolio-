@@ -41,12 +41,12 @@ export const TechGarden = () => {
       : profileData.techStack.filter((c) => c.category === selectedCategory);
 
   return (
-    <section id="skills" style={{ padding: '6rem 0' }}>
+    <section id="skills" style={{ padding: '7rem 0' }}>
       <div className="container">
         <div style={{ textAlign: 'center' }}>
-          <h2 className="section-title">The Tech Garden</h2>
+          <h2 className="section-title">Technical Stack & Ecosystem</h2>
           <p className="section-subtitle">
-            A curated ecosystem of modern tools, frameworks, and engineering competencies.
+            A curated collection of modern engineering tools, frameworks, and core technical proficiencies.
           </p>
 
           {/* Category Filter Pills */}
@@ -55,8 +55,8 @@ export const TechGarden = () => {
               display: 'flex',
               justifyContent: 'center',
               flexWrap: 'wrap',
-              gap: '0.8rem',
-              marginBottom: '3rem'
+              gap: '0.6rem',
+              marginBottom: '3.5rem'
             }}
           >
             {categories.map((cat, idx) => (
@@ -65,8 +65,8 @@ export const TechGarden = () => {
                 onClick={() => setSelectedCategory(cat)}
                 className={selectedCategory === cat ? 'btn-ghibli' : 'btn-ghibli-outline'}
                 style={{
-                  padding: '0.5rem 1.2rem',
-                  fontSize: '0.88rem'
+                  padding: '0.45rem 1.1rem',
+                  fontSize: '0.85rem'
                 }}
               >
                 {cat}
@@ -81,9 +81,9 @@ export const TechGarden = () => {
             <div key={gIdx}>
               <h3
                 style={{
-                  fontSize: '1.4rem',
+                  fontSize: '1.25rem',
                   fontWeight: 700,
-                  color: 'var(--accent-primary)',
+                  color: 'var(--text-main)',
                   marginBottom: '1.5rem',
                   fontFamily: 'var(--font-title)',
                   display: 'flex',
@@ -91,7 +91,7 @@ export const TechGarden = () => {
                   gap: '0.6rem'
                 }}
               >
-                <CheckCircle2 size={20} />
+                <CheckCircle2 size={18} style={{ color: 'var(--accent-primary)' }} />
                 <span>{group.category}</span>
               </h3>
 
@@ -133,28 +133,28 @@ export const TechGarden = () => {
                           >
                             <div
                               style={{
-                                width: '40px',
-                                height: '40px',
-                                borderRadius: '12px',
-                                background: 'rgba(255, 255, 255, 0.07)',
+                                width: '36px',
+                                height: '36px',
+                                borderRadius: '10px',
+                                background: 'rgba(139, 197, 164, 0.08)',
                                 border: '1px solid var(--border-color)',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                color: 'var(--accent-secondary)'
+                                color: 'var(--accent-primary)'
                               }}
                             >
-                              <IconComp size={20} />
+                              <IconComp size={18} />
                             </div>
-                            <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>
+                            <h4 style={{ fontSize: '1.02rem', fontWeight: 600, color: 'var(--text-main)' }}>
                               {skill.name}
                             </h4>
                           </div>
 
                           <span
                             style={{
-                              fontSize: '0.85rem',
-                              fontWeight: 700,
+                              fontSize: '0.82rem',
+                              fontWeight: 600,
                               color: 'var(--accent-primary)',
                               fontFamily: 'var(--font-title)'
                             }}
@@ -168,13 +168,13 @@ export const TechGarden = () => {
                         </p>
                       </div>
 
-                      {/* Progress Bar */}
+                      {/* Clean Progress Bar */}
                       <div
                         style={{
                           width: '100%',
-                          height: '6px',
-                          background: 'rgba(255, 255, 255, 0.1)',
-                          borderRadius: '10px',
+                          height: '4px',
+                          background: 'rgba(255, 255, 255, 0.06)',
+                          borderRadius: '4px',
                           overflow: 'hidden'
                         }}
                       >
@@ -182,9 +182,9 @@ export const TechGarden = () => {
                           style={{
                             width: `${skill.level}%`,
                             height: '100%',
-                            background: 'linear-gradient(90deg, var(--accent-primary), var(--accent-secondary))',
-                            borderRadius: '10px',
-                            transition: 'width 1s ease-in-out'
+                            background: 'var(--accent-primary)',
+                            borderRadius: '4px',
+                            transition: 'width 0.8s ease'
                           }}
                         />
                       </div>

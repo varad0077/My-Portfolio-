@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Eye, Sparkles, Folder } from 'lucide-react';
+import { ExternalLink, Eye } from 'lucide-react';
 import { profileData } from '../data/portfolioData';
 import { ProjectModal } from './ProjectModal';
 import { GithubIcon } from './SocialIcons';
@@ -16,12 +16,12 @@ export const Projects = () => {
       : profileData.projects.filter((p) => p.category === selectedCategory);
 
   return (
-    <section id="projects" style={{ padding: '6rem 0' }}>
+    <section id="projects" style={{ padding: '7rem 0' }}>
       <div className="container">
         <div style={{ textAlign: 'center' }}>
-          <h2 className="section-title">Workshop Artifacts & Projects</h2>
+          <h2 className="section-title">Selected Projects & Works</h2>
           <p className="section-subtitle">
-            A showcase of web applications, AI tools, and full-stack solutions crafted with care.
+            A showcase of web applications, AI tools, and full-stack software solutions engineered for production.
           </p>
 
           {/* Filter Pills */}
@@ -30,7 +30,7 @@ export const Projects = () => {
               display: 'flex',
               justifyContent: 'center',
               flexWrap: 'wrap',
-              gap: '0.8rem',
+              gap: '0.6rem',
               marginBottom: '3.5rem'
             }}
           >
@@ -40,8 +40,8 @@ export const Projects = () => {
                 onClick={() => setSelectedCategory(cat)}
                 className={selectedCategory === cat ? 'btn-ghibli' : 'btn-ghibli-outline'}
                 style={{
-                  padding: '0.5rem 1.2rem',
-                  fontSize: '0.88rem'
+                  padding: '0.45rem 1.1rem',
+                  fontSize: '0.85rem'
                 }}
               >
                 {cat}
@@ -54,7 +54,7 @@ export const Projects = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(330px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
             gap: '2rem'
           }}
         >
@@ -66,13 +66,13 @@ export const Projects = () => {
                 overflow: 'hidden',
                 display: 'flex',
                 flexDirection: 'column',
-                justify: 'space-between',
-                borderRadius: '24px'
+                justifyContent: 'space-between',
+                borderRadius: '20px'
               }}
             >
               <div>
                 {/* Image Banner */}
-                <div style={{ position: 'relative', overflow: 'hidden', height: '210px' }}>
+                <div style={{ position: 'relative', overflow: 'hidden', height: '200px' }}>
                   <img
                     src={proj.image}
                     alt={proj.title}
@@ -80,23 +80,24 @@ export const Projects = () => {
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover',
-                      transition: 'transform 0.5s ease'
+                      filter: 'saturate(0.85) brightness(0.9)',
+                      transition: 'transform 0.5s ease, filter 0.5s ease'
                     }}
                   />
                   
-                  {/* Category Pill Tag */}
+                  {/* Category Tag */}
                   <span
                     style={{
                       position: 'absolute',
-                      top: '1rem',
-                      left: '1rem',
-                      background: 'rgba(15, 23, 42, 0.8)',
+                      top: '0.9rem',
+                      left: '0.9rem',
+                      background: 'rgba(15, 23, 32, 0.82)',
                       backdropFilter: 'blur(8px)',
                       color: 'var(--accent-primary)',
-                      padding: '0.3rem 0.8rem',
-                      borderRadius: '20px',
-                      fontSize: '0.78rem',
-                      fontWeight: 700,
+                      padding: '0.25rem 0.75rem',
+                      borderRadius: '12px',
+                      fontSize: '0.75rem',
+                      fontWeight: 600,
                       border: '1px solid var(--border-color)'
                     }}
                   >
@@ -105,29 +106,29 @@ export const Projects = () => {
                 </div>
 
                 {/* Card Content */}
-                <div style={{ padding: '1.5rem' }}>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.4rem' }}>
+                <div style={{ padding: '1.4rem' }}>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.3rem' }}>
                     {proj.title}
                   </h3>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--accent-secondary)', fontWeight: 600, marginBottom: '0.8rem' }}>
+                  <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', fontWeight: 500, marginBottom: '0.8rem' }}>
                     {proj.subtitle}
                   </p>
 
-                  <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '1.2rem' }}>
-                    {proj.description.length > 120 ? `${proj.description.substring(0, 120)}...` : proj.description}
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '1.2rem' }}>
+                    {proj.description.length > 115 ? `${proj.description.substring(0, 115)}...` : proj.description}
                   </p>
 
                   {/* Tech Tags */}
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.5rem' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.2rem' }}>
                     {proj.techTags.map((tag, idx) => (
                       <span
                         key={idx}
                         style={{
-                          background: 'rgba(255, 255, 255, 0.05)',
-                          border: '1px solid var(--glass-border)',
-                          padding: '0.2rem 0.6rem',
-                          borderRadius: '12px',
-                          fontSize: '0.75rem',
+                          background: 'rgba(255, 255, 255, 0.04)',
+                          border: '1px solid var(--border-color)',
+                          padding: '0.2rem 0.55rem',
+                          borderRadius: '8px',
+                          fontSize: '0.72rem',
                           color: 'var(--text-muted)'
                         }}
                       >
@@ -141,33 +142,33 @@ export const Projects = () => {
               {/* Bottom Card Actions */}
               <div
                 style={{
-                  padding: '1rem 1.5rem 1.5rem 1.5rem',
+                  padding: '1rem 1.4rem 1.4rem 1.4rem',
                   borderTop: '1px solid var(--glass-border)',
                   display: 'flex',
                   alignItems: 'center',
-                  justify: 'space-between'
+                  justifyContent: 'space-between'
                 }}
               >
                 <button
                   onClick={() => setActiveModalProject(proj)}
                   className="btn-ghibli-outline"
-                  style={{ padding: '0.4rem 0.9rem', fontSize: '0.82rem' }}
+                  style={{ padding: '0.35rem 0.8rem', fontSize: '0.8rem' }}
                 >
                   <Eye size={14} />
-                  <span>Inspect Details</span>
+                  <span>Inspect</span>
                 </button>
 
-                <div style={{ display: 'flex', gap: '0.6rem' }}>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
                   {proj.githubUrl && (
                     <a
                       href={proj.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn-ghibli-outline"
-                      style={{ padding: '0.4rem 0.6rem' }}
+                      style={{ padding: '0.35rem 0.55rem' }}
                       title="GitHub Repository"
                     >
-                      <GithubIcon size={15} />
+                      <GithubIcon size={14} />
                     </a>
                   )}
                   {proj.liveUrl && proj.liveUrl !== '#' && (
@@ -176,10 +177,10 @@ export const Projects = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn-ghibli-outline"
-                      style={{ padding: '0.4rem 0.6rem', color: 'var(--accent-primary)' }}
+                      style={{ padding: '0.35rem 0.55rem', color: 'var(--accent-primary)' }}
                       title="Live Preview"
                     >
-                      <ExternalLink size={15} />
+                      <ExternalLink size={14} />
                     </a>
                   )}
                 </div>
@@ -194,3 +195,4 @@ export const Projects = () => {
     </section>
   );
 };
+

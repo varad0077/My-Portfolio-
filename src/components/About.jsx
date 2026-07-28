@@ -1,15 +1,15 @@
 import React from 'react';
-import { BookOpen, Compass, Feather, ShieldCheck, Sparkles, Heart } from 'lucide-react';
+import { BookOpen, Compass, Feather, ShieldCheck } from 'lucide-react';
 import { profileData } from '../data/portfolioData';
 
 export const About = () => {
   return (
-    <section id="about" style={{ padding: '6rem 0' }}>
+    <section id="about" style={{ padding: '7rem 0' }}>
       <div className="container">
         <div style={{ textAlign: 'center' }}>
-          <h2 className="section-title">The Artisan's Journey</h2>
+          <h2 className="section-title">Engineering & Philosophy</h2>
           <p className="section-subtitle">
-            Blending software craftsmanship with Studio Ghibli inspired tranquility & care.
+            Blending technical precision with thoughtful craftsmanship and minimal design aesthetics.
           </p>
         </div>
 
@@ -21,7 +21,7 @@ export const About = () => {
             alignItems: 'stretch'
           }}
         >
-          {/* Main Storybook Card */}
+          {/* Main Profile Story Card */}
           <div className="ghibli-card" style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
               <div
@@ -33,14 +33,14 @@ export const About = () => {
                   marginBottom: '1.2rem'
                 }}
               >
-                <BookOpen size={24} />
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 700 }}>About Me</h3>
+                <BookOpen size={22} />
+                <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-main)' }}>About Me</h3>
               </div>
 
               <div
                 style={{
                   color: 'var(--text-muted)',
-                  fontSize: '1.05rem',
+                  fontSize: '1.02rem',
                   lineHeight: 1.8,
                   whiteSpace: 'pre-line'
                 }}
@@ -65,11 +65,11 @@ export const About = () => {
                 📍 Based in <strong style={{ color: 'var(--text-main)' }}>{profileData.location}</strong>
               </div>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <span className="btn-ghibli-outline" style={{ padding: '0.3rem 0.8rem', fontSize: '0.8rem' }}>
-                  ☕ Match Tea
-                </span>
-                <span className="btn-ghibli-outline" style={{ padding: '0.3rem 0.8rem', fontSize: '0.8rem' }}>
+                <span className="btn-ghibli-outline" style={{ padding: '0.35rem 0.8rem', fontSize: '0.8rem' }}>
                   🌱 Open Source
+                </span>
+                <span className="btn-ghibli-outline" style={{ padding: '0.35rem 0.8rem', fontSize: '0.8rem' }}>
+                  ⚡ System Design
                 </span>
               </div>
             </div>
@@ -77,7 +77,7 @@ export const About = () => {
 
           {/* Philosophy Cards Grid */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-            <h3 style={{ fontSize: '1.3rem', color: 'var(--accent-secondary)', fontFamily: 'var(--font-title)', fontWeight: 700 }}>
+            <h3 style={{ fontSize: '1.2rem', color: 'var(--accent-primary)', fontFamily: 'var(--font-title)', fontWeight: 600 }}>
               Core Principles & Craft
             </h3>
 
@@ -94,24 +94,25 @@ export const About = () => {
               >
                 <div
                   style={{
-                    background: 'rgba(255, 255, 255, 0.06)',
+                    background: 'rgba(139, 197, 164, 0.08)',
                     border: '1px solid var(--border-color)',
                     color: 'var(--accent-primary)',
-                    padding: '0.7rem',
-                    borderRadius: '14px',
+                    padding: '0.6rem',
+                    borderRadius: '12px',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    flexShrink: 0
                   }}
                 >
-                  {idx === 0 ? <Feather size={20} /> : idx === 1 ? <Sparkles size={20} /> : <Compass size={20} />}
+                  {idx === 0 ? <Feather size={18} /> : idx === 1 ? <ShieldCheck size={18} /> : <Compass size={18} />}
                 </div>
 
                 <div>
-                  <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.3rem' }}>
+                  <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.3rem' }}>
                     {item.title}
                   </h4>
-                  <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
                     {item.desc}
                   </p>
                 </div>
@@ -123,3 +124,4 @@ export const About = () => {
     </section>
   );
 };
+
