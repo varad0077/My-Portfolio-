@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { GhibliCanvas } from './components/GhibliCanvas';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -10,19 +10,13 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
 export function App() {
-  const [theme, setTheme] = useState('totoro');
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
-      {/* Background Interactive Soot-Sprite & Star Canvas */}
+      {/* Background Interactive Ambient Spore Canvas */}
       <GhibliCanvas />
 
       {/* Floating Glass Navbar */}
-      <Navbar currentTheme={theme} setTheme={setTheme} />
+      <Navbar />
 
       {/* Main Content Layout */}
       <main style={{ position: 'relative', zIndex: 10 }}>
@@ -41,3 +35,4 @@ export function App() {
 }
 
 export default App;
+
