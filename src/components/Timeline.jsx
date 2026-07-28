@@ -1,22 +1,22 @@
 import React from 'react';
-import { Briefcase, GraduationCap, Sparkles, MapPin, CheckCircle2 } from 'lucide-react';
+import { Briefcase, GraduationCap, CheckCircle2 } from 'lucide-react';
 import { profileData } from '../data/portfolioData';
 
 export const Timeline = () => {
   return (
-    <section id="timeline" style={{ padding: '6rem 0' }}>
+    <section id="timeline" style={{ padding: '7rem 0' }}>
       <div className="container">
         <div style={{ textAlign: 'center' }}>
-          <h2 className="section-title">The Map of Experience</h2>
+          <h2 className="section-title">Experience & Journey</h2>
           <p className="section-subtitle">
-            A chronicle of professional milestones, career chapters, and academic achievements.
+            A chronicle of professional milestones, engineering leadership, and academic background.
           </p>
         </div>
 
         {/* Timeline Container */}
         <div
           style={{
-            maxWidth: '850px',
+            maxWidth: '820px',
             margin: '0 auto',
             position: 'relative',
             paddingLeft: '2rem'
@@ -30,7 +30,7 @@ export const Timeline = () => {
               bottom: '1rem',
               left: '0.6rem',
               width: '2px',
-              background: 'linear-gradient(180deg, var(--accent-primary), var(--accent-secondary), transparent)'
+              background: 'rgba(139, 197, 164, 0.2)'
             }}
           />
 
@@ -56,11 +56,10 @@ export const Timeline = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: 'var(--accent-primary)',
-                  boxShadow: '0 0 12px var(--glow-color)'
+                  color: 'var(--accent-primary)'
                 }}
               >
-                {item.type === 'Work' ? <Briefcase size={16} /> : <GraduationCap size={16} />}
+                {item.type === 'Work' ? <Briefcase size={15} /> : <GraduationCap size={15} />}
               </div>
 
               {/* Card */}
@@ -77,13 +76,13 @@ export const Timeline = () => {
                 >
                   <span
                     style={{
-                      fontSize: '0.85rem',
-                      fontWeight: 700,
-                      color: 'var(--accent-secondary)',
+                      fontSize: '0.8rem',
+                      fontWeight: 600,
+                      color: 'var(--accent-primary)',
                       fontFamily: 'var(--font-title)',
-                      background: 'rgba(255, 255, 255, 0.05)',
-                      padding: '0.2rem 0.8rem',
-                      borderRadius: '16px',
+                      background: 'rgba(139, 197, 164, 0.08)',
+                      padding: '0.2rem 0.7rem',
+                      borderRadius: '12px',
                       border: '1px solid var(--border-color)'
                     }}
                   >
@@ -95,11 +94,11 @@ export const Timeline = () => {
                   </span>
                 </div>
 
-                <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.4rem' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.4rem' }}>
                   {item.title}
                 </h3>
 
-                <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '1rem' }}>
+                <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '1rem' }}>
                   {item.description}
                 </p>
 
@@ -114,7 +113,7 @@ export const Timeline = () => {
                           alignItems: 'flex-start',
                           gap: '0.5rem',
                           fontSize: '0.88rem',
-                          color: 'var(--text-main)'
+                          color: 'var(--text-muted)'
                         }}
                       >
                         <CheckCircle2 size={15} style={{ color: 'var(--accent-primary)', marginTop: '2px', flexShrink: 0 }} />
@@ -131,3 +130,4 @@ export const Timeline = () => {
     </section>
   );
 };
+

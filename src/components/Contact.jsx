@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Send, Copy, Check, Sparkles, MessageSquare } from 'lucide-react';
+import { Mail, Send, Copy, Check } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { profileData } from '../data/portfolioData';
 import { GithubIcon, LinkedinIcon, TwitterIcon } from './SocialIcons';
@@ -19,12 +19,12 @@ export const Contact = () => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
 
-    // Trigger sweet Ghibli celebration confetti!
+    // Subtle celebration confetti with sage colors
     confetti({
-      particleCount: 80,
-      spread: 70,
+      particleCount: 50,
+      spread: 60,
       origin: { y: 0.6 },
-      colors: ['#4ade80', '#38bdf8', '#facc15', '#c084fc']
+      colors: ['#8BC5A4', '#C9D8C5', '#F5F5F3']
     });
 
     setSubmitted(true);
@@ -33,12 +33,12 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" style={{ padding: '6rem 0' }}>
+    <section id="contact" style={{ padding: '7rem 0' }}>
       <div className="container">
         <div style={{ textAlign: 'center' }}>
-          <h2 className="section-title">Send a Message Bird</h2>
+          <h2 className="section-title">Get In Touch</h2>
           <p className="section-subtitle">
-            Whether you have a exciting project idea, a job opportunity, or just want to talk tech & anime.
+            Have a project idea, engineering role, or collaboration proposal? Send a message to connect.
           </p>
         </div>
 
@@ -53,20 +53,20 @@ export const Contact = () => {
           {/* Quick Info & Social Card */}
           <div className="ghibli-card" style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.6rem' }}>
-                Let's Build Something Magical
+              <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.6rem' }}>
+                Contact & Channels
               </h3>
-              <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '2rem' }}>
-                My inbox is always open. Feel free to reach out via form or send a direct email anytime!
+              <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '2rem', fontSize: '0.95rem' }}>
+                Feel free to reach out via form or copy my direct email below. Always interested in technical discussions and opportunities.
               </p>
 
               {/* Copy Email Tool */}
               <div
                 style={{
-                  background: 'rgba(255, 255, 255, 0.04)',
+                  background: 'rgba(255, 255, 255, 0.03)',
                   border: '1px solid var(--border-color)',
-                  padding: '1rem 1.2rem',
-                  borderRadius: '16px',
+                  padding: '0.9rem 1.2rem',
+                  borderRadius: '14px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
@@ -74,8 +74,8 @@ export const Contact = () => {
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-                  <Mail size={20} style={{ color: 'var(--accent-primary)' }} />
-                  <span style={{ fontWeight: 600, color: 'var(--text-main)', fontSize: '0.95rem' }}>
+                  <Mail size={18} style={{ color: 'var(--accent-primary)' }} />
+                  <span style={{ fontWeight: 500, color: 'var(--text-main)', fontSize: '0.92rem' }}>
                     {profileData.email}
                   </span>
                 </div>
@@ -83,7 +83,7 @@ export const Contact = () => {
                 <button
                   onClick={handleCopyEmail}
                   className="btn-ghibli-outline"
-                  style={{ padding: '0.4rem 0.8rem', fontSize: '0.82rem' }}
+                  style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem' }}
                 >
                   {copied ? (
                     <>
@@ -101,46 +101,52 @@ export const Contact = () => {
 
               {/* Social Channels */}
               <div>
-                <h4 style={{ fontSize: '1rem', color: 'var(--accent-secondary)', fontWeight: 700, marginBottom: '1rem' }}>
-                  Social Channels
+                <h4 style={{ fontSize: '0.95rem', color: 'var(--accent-primary)', fontWeight: 600, marginBottom: '1rem', fontFamily: 'var(--font-title)' }}>
+                  Social Profiles
                 </h4>
-                <div style={{ display: 'flex', gap: '0.8rem' }}>
-                  <a
-                    href={profileData.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-ghibli-outline"
-                    style={{ padding: '0.6rem 1rem' }}
-                  >
-                    <GithubIcon size={18} />
-                    <span>GitHub</span>
-                  </a>
-                  <a
-                    href={profileData.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-ghibli-outline"
-                    style={{ padding: '0.6rem 1rem' }}
-                  >
-                    <LinkedinIcon size={18} />
-                    <span>LinkedIn</span>
-                  </a>
-                  <a
-                    href={profileData.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-ghibli-outline"
-                    style={{ padding: '0.6rem 1rem' }}
-                  >
-                    <TwitterIcon size={18} />
-                    <span>Twitter/X</span>
-                  </a>
+                <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
+                  {profileData.socials?.github && (
+                    <a
+                      href={profileData.socials.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-ghibli-outline"
+                      style={{ padding: '0.5rem 0.9rem', fontSize: '0.85rem' }}
+                    >
+                      <GithubIcon size={16} />
+                      <span>GitHub</span>
+                    </a>
+                  )}
+                  {profileData.socials?.linkedin && (
+                    <a
+                      href={profileData.socials.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-ghibli-outline"
+                      style={{ padding: '0.5rem 0.9rem', fontSize: '0.85rem' }}
+                    >
+                      <LinkedinIcon size={16} />
+                      <span>LinkedIn</span>
+                    </a>
+                  )}
+                  {profileData.socials?.twitter && (
+                    <a
+                      href={profileData.socials.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-ghibli-outline"
+                      style={{ padding: '0.5rem 0.9rem', fontSize: '0.85rem' }}
+                    >
+                      <TwitterIcon size={16} />
+                      <span>Twitter</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
 
             <div style={{ marginTop: '2rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-              ⚡ Usually responds within 24 hours
+              ⚡ Response time: Usually within 24 hours
             </div>
           </div>
 
@@ -148,7 +154,7 @@ export const Contact = () => {
           <div className="ghibli-card" style={{ padding: '2.5rem' }}>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: 600 }}>
+                <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: 500 }}>
                   Your Name *
                 </label>
                 <input
@@ -156,22 +162,23 @@ export const Contact = () => {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="e.g. Chihiro / Howl"
+                  placeholder="John Doe"
                   style={{
                     width: '100%',
                     padding: '0.8rem 1rem',
-                    borderRadius: '12px',
+                    borderRadius: '10px',
                     border: '1px solid var(--border-color)',
-                    background: 'rgba(0, 0, 0, 0.25)',
+                    background: 'rgba(15, 23, 32, 0.6)',
                     color: 'var(--text-main)',
                     fontFamily: 'var(--font-body)',
+                    fontSize: '0.92rem',
                     outline: 'none'
                   }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: 600 }}>
+                <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: 500 }}>
                   Email Address *
                 </label>
                 <input
@@ -179,22 +186,23 @@ export const Contact = () => {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="your.email@example.com"
+                  placeholder="name@company.com"
                   style={{
                     width: '100%',
                     padding: '0.8rem 1rem',
-                    borderRadius: '12px',
+                    borderRadius: '10px',
                     border: '1px solid var(--border-color)',
-                    background: 'rgba(0, 0, 0, 0.25)',
+                    background: 'rgba(15, 23, 32, 0.6)',
                     color: 'var(--text-main)',
                     fontFamily: 'var(--font-body)',
+                    fontSize: '0.92rem',
                     outline: 'none'
                   }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: 600 }}>
+                <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: 500 }}>
                   Message *
                 </label>
                 <textarea
@@ -202,15 +210,16 @@ export const Contact = () => {
                   required
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Tell me about your project idea or opportunity..."
+                  placeholder="Describe your inquiry..."
                   style={{
                     width: '100%',
                     padding: '0.8rem 1rem',
-                    borderRadius: '12px',
+                    borderRadius: '10px',
                     border: '1px solid var(--border-color)',
-                    background: 'rgba(0, 0, 0, 0.25)',
+                    background: 'rgba(15, 23, 32, 0.6)',
                     color: 'var(--text-main)',
                     fontFamily: 'var(--font-body)',
+                    fontSize: '0.92rem',
                     outline: 'none',
                     resize: 'vertical'
                   }}
@@ -218,24 +227,24 @@ export const Contact = () => {
               </div>
 
               <button type="submit" className="btn-ghibli" style={{ justifyContent: 'center', marginTop: '0.5rem' }}>
-                <Send size={18} />
-                <span>Dispatch Message</span>
+                <Send size={16} />
+                <span>Send Message</span>
               </button>
 
               {submitted && (
                 <div
                   style={{
-                    background: 'rgba(74, 222, 128, 0.15)',
-                    border: '1px solid var(--accent-primary)',
+                    background: 'rgba(139, 197, 164, 0.12)',
+                    border: '1px solid var(--border-hover)',
                     color: 'var(--accent-primary)',
                     padding: '0.8rem',
-                    borderRadius: '12px',
+                    borderRadius: '10px',
                     textAlign: 'center',
-                    fontSize: '0.9rem',
-                    fontWeight: 600
+                    fontSize: '0.88rem',
+                    fontWeight: 500
                   }}
                 >
-                  ✨ Message dispatched successfully! I will reply shortly.
+                  ✓ Message sent successfully! I will reply shortly.
                 </div>
               )}
             </form>
@@ -245,3 +254,4 @@ export const Contact = () => {
     </section>
   );
 };
+
