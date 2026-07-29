@@ -1,127 +1,143 @@
 import React from 'react';
-import { BookOpen, Compass, Feather, ShieldCheck } from 'lucide-react';
+import { MapPin, Briefcase, Sparkles } from 'lucide-react';
 import { profileData } from '../data/portfolioData';
+import { ScrollReveal } from './ScrollReveal';
+
+const philosophyIcons = [Sparkles, Briefcase, MapPin];
 
 export const About = () => {
   return (
-    <section id="about" style={{ padding: '7rem 0' }}>
+    <section id="about" style={{ padding: 'var(--section-pad) 0' }}>
       <div className="container">
-        <div style={{ textAlign: 'center' }}>
-          <h2 className="section-title">Engineering & Philosophy</h2>
-          <p className="section-subtitle">
-            Blending technical precision with thoughtful craftsmanship and minimal design aesthetics.
-          </p>
-        </div>
+        <ScrollReveal>
+          <span className="section-label">About</span>
+        </ScrollReveal>
 
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '2.5rem',
-            alignItems: 'stretch'
+            gridTemplateColumns: '1fr',
+            gap: '4rem',
+            alignItems: 'start'
           }}
         >
-          {/* Main Profile Story Card */}
-          <div className="ghibli-card" style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div>
-              <div
+          {/* Top — Pull quote + Bio */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '3rem',
+              alignItems: 'start'
+            }}
+          >
+            {/* Left — pull quote */}
+            <ScrollReveal delay={0.1}>
+              <h2
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.8rem',
-                  color: 'var(--accent-primary)',
-                  marginBottom: '1.2rem'
+                  fontSize: 'clamp(1.6rem, 3.5vw, 2.4rem)',
+                  fontWeight: 700,
+                  lineHeight: 1.25,
+                  letterSpacing: '-0.03em',
+                  color: 'var(--text-primary)'
                 }}
               >
-                <BookOpen size={22} />
-                <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-main)' }}>About Me</h3>
-              </div>
+                I build software that's{' '}
+                <span style={{ color: 'var(--accent)' }}>technically sound</span>{' '}
+                and{' '}
+                <span style={{ color: 'var(--accent)' }}>beautifully crafted</span>.
+              </h2>
+            </ScrollReveal>
 
+            {/* Right — bio text */}
+            <ScrollReveal delay={0.2}>
               <div
                 style={{
-                  color: 'var(--text-muted)',
-                  fontSize: '1.02rem',
+                  color: 'var(--text-secondary)',
+                  fontSize: '0.98rem',
                   lineHeight: 1.8,
                   whiteSpace: 'pre-line'
                 }}
               >
                 {profileData.bio}
               </div>
-            </div>
 
-            <div
-              style={{
-                marginTop: '2rem',
-                paddingTop: '1.5rem',
-                borderTop: '1px solid var(--border-color)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-                gap: '1rem'
-              }}
-            >
-              <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                📍 Based in <strong style={{ color: 'var(--text-main)' }}>{profileData.location}</strong>
-              </div>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <span className="btn-ghibli-outline" style={{ padding: '0.35rem 0.8rem', fontSize: '0.8rem' }}>
-                  🌱 Open Source
-                </span>
-                <span className="btn-ghibli-outline" style={{ padding: '0.35rem 0.8rem', fontSize: '0.8rem' }}>
-                  ⚡ System Design
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Philosophy Cards Grid */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-            <h3 style={{ fontSize: '1.2rem', color: 'var(--accent-primary)', fontFamily: 'var(--font-title)', fontWeight: 600 }}>
-              Core Principles & Craft
-            </h3>
-
-            {profileData.philosophy.map((item, idx) => (
               <div
-                key={idx}
-                className="ghibli-card"
                 style={{
-                  padding: '1.4rem 1.6rem',
+                  marginTop: '1.5rem',
                   display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '1.2rem'
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  fontSize: '0.88rem',
+                  color: 'var(--text-secondary)'
                 }}
               >
-                <div
-                  style={{
-                    background: 'rgba(139, 197, 164, 0.08)',
-                    border: '1px solid var(--border-color)',
-                    color: 'var(--accent-primary)',
-                    padding: '0.6rem',
-                    borderRadius: '12px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0
-                  }}
-                >
-                  {idx === 0 ? <Feather size={18} /> : idx === 1 ? <ShieldCheck size={18} /> : <Compass size={18} />}
-                </div>
-
-                <div>
-                  <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.3rem' }}>
-                    {item.title}
-                  </h4>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-                    {item.desc}
-                  </p>
-                </div>
+                <MapPin size={14} style={{ color: 'var(--accent)' }} />
+                <span>{profileData.location}</span>
               </div>
-            ))}
+            </ScrollReveal>
+          </div>
+
+          {/* Bottom — Philosophy cards */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '1.25rem'
+            }}
+          >
+            {profileData.philosophy.map((item, idx) => {
+              const Icon = philosophyIcons[idx] || Sparkles;
+              return (
+                <ScrollReveal key={idx} delay={0.15 + idx * 0.1}>
+                  <div
+                    className="card"
+                    style={{
+                      padding: '1.8rem',
+                      height: '100%'
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '36px',
+                        height: '36px',
+                        borderRadius: '10px',
+                        background: 'var(--accent-muted)',
+                        border: '1px solid var(--border)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'var(--accent)',
+                        marginBottom: '1.2rem'
+                      }}
+                    >
+                      <Icon size={17} />
+                    </div>
+                    <h3
+                      style={{
+                        fontSize: '1.05rem',
+                        fontWeight: 600,
+                        color: 'var(--text-primary)',
+                        marginBottom: '0.5rem'
+                      }}
+                    >
+                      {item.title}
+                    </h3>
+                    <p
+                      style={{
+                        fontSize: '0.88rem',
+                        color: 'var(--text-secondary)',
+                        lineHeight: 1.65
+                      }}
+                    >
+                      {item.desc}
+                    </p>
+                  </div>
+                </ScrollReveal>
+              );
+            })}
           </div>
         </div>
       </div>
     </section>
   );
 };
-

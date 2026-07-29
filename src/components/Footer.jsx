@@ -1,5 +1,5 @@
 import React from 'react';
-import { Leaf, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { profileData } from '../data/portfolioData';
 
 export const Footer = () => {
@@ -10,10 +10,10 @@ export const Footer = () => {
   return (
     <footer
       style={{
-        borderTop: '1px solid var(--border-color)',
-        background: 'var(--bg-secondary)',
-        padding: '3rem 0 2rem 0',
-        color: 'var(--text-muted)'
+        borderTop: '1px solid var(--border)',
+        padding: '3rem 0 2rem',
+        position: 'relative',
+        zIndex: 10
       }}
     >
       <div className="container">
@@ -27,68 +27,76 @@ export const Footer = () => {
             marginBottom: '2rem'
           }}
         >
-          {/* Brand Badge */}
+          {/* Brand */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
             <div
               style={{
-                width: '28px',
-                height: '28px',
-                borderRadius: '8px',
-                background: 'linear-gradient(135deg, #8BC5A4 0%, #76AB8B 100%)',
+                width: '26px',
+                height: '26px',
+                borderRadius: '7px',
+                background: 'var(--accent)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#0F1720'
+                color: 'var(--bg-primary)',
+                fontFamily: 'var(--font-heading)',
+                fontWeight: 700,
+                fontSize: '0.8rem',
+                lineHeight: 1
               }}
             >
-              <Leaf size={16} />
+              V
             </div>
-            <span style={{ fontWeight: 700, color: 'var(--text-main)', fontSize: '1rem', fontFamily: 'var(--font-title)' }}>
+            <span
+              style={{
+                fontFamily: 'var(--font-heading)',
+                fontWeight: 600,
+                fontSize: '0.95rem',
+                color: 'var(--text-primary)'
+              }}
+            >
               {profileData.name}
             </span>
           </div>
 
-          {/* Navigation Links */}
-          <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.88rem' }}>
+          {/* Quick nav */}
+          <nav style={{ display: 'flex', gap: '1.5rem', fontSize: '0.85rem' }}>
             <a href="#about" className="nav-link">About</a>
-            <a href="#skills" className="nav-link">Tech Stack</a>
+            <a href="#skills" className="nav-link">Skills</a>
             <a href="#projects" className="nav-link">Projects</a>
-            <a href="#timeline" className="nav-link">Experience</a>
+            <a href="#experience" className="nav-link">Experience</a>
             <a href="#contact" className="nav-link">Contact</a>
-          </div>
+          </nav>
 
-          {/* Scroll to Top */}
+          {/* Back to top */}
           <button
             onClick={scrollToTop}
-            className="btn-ghibli-outline"
-            style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}
+            className="btn-ghost"
+            style={{ padding: '0.4rem 0.75rem', fontSize: '0.78rem' }}
           >
             <span>Top</span>
-            <ArrowUp size={14} />
+            <ArrowUp size={13} />
           </button>
         </div>
 
+        {/* Bottom bar */}
         <div
           style={{
             paddingTop: '1.5rem',
-            borderTop: '1px solid var(--glass-border)',
+            borderTop: '1px solid var(--border)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
             gap: '1rem',
-            fontSize: '0.82rem'
+            fontSize: '0.78rem',
+            color: 'var(--text-tertiary)'
           }}
         >
-          <div>
-            © {new Date().getFullYear()} {profileData.name}. Engineered with React & Minimal Aesthetics.
-          </div>
-          <div style={{ color: 'var(--text-muted)' }}>
-            Design inspired by Linear & Apple guidelines
-          </div>
+          <span>© {new Date().getFullYear()} {profileData.name}. All rights reserved.</span>
+          <span>Engineered with React & attention to detail.</span>
         </div>
       </div>
     </footer>
   );
 };
-
