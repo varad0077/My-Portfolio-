@@ -1,196 +1,148 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-
-const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Contact', href: '#contact' }
-];
+import { Leaf, Menu, X, Sparkles, Volume2, VolumeX } from 'lucide-react';
+import { AudioPlayer } from './AudioPlayer';
 
 export const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 30);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // Active section tracking
-  useEffect(() => {
-    const sections = navLinks.map(l => document.querySelector(l.href));
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            setActiveSection('#' + entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.3, rootMargin: '-80px 0px -40% 0px' }
-    );
-
-    sections.forEach(s => s && observer.observe(s));
-    return () => observer.disconnect();
-  }, []);
-
-  // Lock body scroll when mobile menu is open
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [mobileOpen]);
 
   return (
-    <>
-      <header
+    <header
+      style={{
+        position: 'fixed',
+        top: '1.2rem',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: '90%',
+        maxWidth: '1140px',
+        zIndex: 100,
+        padding: isScrolled ? '0.7rem 1.4rem' : '0.9rem 1.6rem',
+        background: isScrolled ? 'rgba(15, 23, 32, 0.88)' : 'rgba(24, 36, 45, 0.55)',
+        backdropFilter: 'blur(18px)',
+        WebkitBackdropFilter: 'blur(18px)',
+        border: '1px solid var(--border-color)',
+        borderRadius: '16px',
+        boxShadow: isScrolled ? '0 12px 32px rgba(0, 0, 0, 0.35)' : '0 4px 20px rgba(0, 0, 0, 0.15)',
+        transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+      }}
+    >
+      {/* Minimal Brand Logo */}
+      <a
+        href="#"
         style={{
-          position: 'fixed',
-          top: '1rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '90%',
-          maxWidth: '720px',
-          zIndex: 100,
-          padding: scrolled ? '0.6rem 1.2rem' : '0.75rem 1.4rem',
-          background: scrolled
-            ? 'rgba(10, 10, 15, 0.88)'
-            : 'rgba(10, 10, 15, 0.5)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          border: `1px solid ${scrolled ? 'var(--border-strong)' : 'var(--border)'}`,
-          borderRadius: '14px',
-          boxShadow: scrolled ? 'var(--shadow-md)' : 'var(--shadow-sm)',
-          transition: 'all 0.35s var(--ease-out)',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between'
+          gap: '0.6rem',
+          textDecoration: 'none',
+          color: 'var(--text-main)',
+          fontWeight: 700,
+          fontSize: '1.1rem',
+          fontFamily: 'var(--font-title)'
         }}
       >
-        {/* Logo / Monogram */}
-        <a
-          href="#"
+        <div
           style={{
+            width: '32px',
+            height: '32px',
+            borderRadius: '10px',
+            background: 'linear-gradient(135deg, #8BC5A4 0%, #76AB8B 100%)',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.6rem',
-            textDecoration: 'none'
+            justifyContent: 'center',
+            color: '#0F1720'
           }}
         >
-          <div
-            style={{
-              width: '30px',
-              height: '30px',
-              borderRadius: '8px',
-              background: 'var(--accent)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'var(--bg-primary)',
-              fontFamily: 'var(--font-heading)',
-              fontWeight: 700,
-              fontSize: '0.95rem',
-              lineHeight: 1
-            }}
-          >
-            V
-          </div>
-          <span
-            style={{
-              fontFamily: 'var(--font-heading)',
-              fontWeight: 600,
-              fontSize: '0.95rem',
-              color: 'var(--text-primary)'
-            }}
-          >
-            Varad
-          </span>
-        </a>
+          <Leaf size={18} />
+        </div>
+        <span>
+          Varad <span style={{ color: 'var(--accent-primary)', fontSize: '0.85rem', fontWeight: 500 }}>✦ Portfolio</span>
+        </span>
+      </a>
 
-        {/* Desktop nav links */}
-        <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '1.8rem' }}>
-          {navLinks.map(link => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={`nav-link ${activeSection === link.href ? 'active' : ''}`}
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-
-        {/* Mobile hamburger */}
-        <button
-          className="mobile-toggle"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle navigation menu"
-          style={{
-            display: 'none',
-            background: 'transparent',
-            border: 'none',
-            color: 'var(--text-primary)',
-            cursor: 'pointer',
-            padding: '0.3rem'
-          }}
-        >
-          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-      </header>
-
-      {/* Mobile overlay menu */}
-      <div
+      {/* Desktop Navigation Links */}
+      <nav
+        className="desktop-links"
         style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 99,
-          background: 'rgba(10, 10, 15, 0.96)',
-          backdropFilter: 'blur(24px)',
-          WebkitBackdropFilter: 'blur(24px)',
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center',
-          gap: '2rem',
-          opacity: mobileOpen ? 1 : 0,
-          pointerEvents: mobileOpen ? 'auto' : 'none',
-          transition: 'opacity 0.35s var(--ease-out)'
+          gap: '2rem'
         }}
       >
-        {navLinks.map((link, i) => (
-          <a
-            key={link.href}
-            href={link.href}
-            onClick={() => setMobileOpen(false)}
-            style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: '1.6rem',
-              fontWeight: 600,
-              color: 'var(--text-primary)',
-              textDecoration: 'none',
-              opacity: mobileOpen ? 1 : 0,
-              transform: mobileOpen ? 'translateY(0)' : 'translateY(20px)',
-              transition: `opacity 0.4s ease ${0.1 + i * 0.06}s, transform 0.4s var(--ease-out) ${0.1 + i * 0.06}s`
-            }}
-          >
-            {link.label}
-          </a>
-        ))}
+        <a href="#about" className="nav-link">About</a>
+        <a href="#skills" className="nav-link">Tech Stack</a>
+        <a href="#projects" className="nav-link">Projects</a>
+        <a href="#timeline" className="nav-link">Experience</a>
+        <a href="#contact" className="nav-link">Contact</a>
+      </nav>
+
+      {/* Right Controls (Audio Ambience Player) */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+        <AudioPlayer />
+
+        {/* Mobile Hamburger Toggle */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="mobile-toggle"
+          style={{
+            background: 'transparent',
+            border: 'none',
+            color: 'var(--text-main)',
+            cursor: 'pointer',
+            padding: '0.4rem',
+            display: 'none'
+          }}
+        >
+          {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          .desktop-nav {
+        .nav-link {
+          color: var(--text-muted);
+          text-decoration: none;
+          font-weight: 500;
+          font-family: var(--font-title);
+          font-size: 0.92rem;
+          transition: color 0.2s ease;
+          position: relative;
+        }
+        .nav-link:hover {
+          color: var(--text-main);
+        }
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          width: 0%;
+          height: 1.5px;
+          background: var(--accent-primary);
+          transition: width 0.25s ease;
+        }
+        .nav-link:hover::after {
+          width: 100%;
+        }
+        @media (max-width: 900px) {
+          .desktop-links {
             display: none !important;
           }
           .mobile-toggle {
-            display: flex !important;
+            display: block !important;
           }
         }
       `}</style>
-    </>
+    </header>
   );
 };
+

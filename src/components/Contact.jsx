@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { Mail, Send, Copy, Check, ArrowUpRight } from 'lucide-react';
+import { Mail, Send, Copy, Check } from 'lucide-react';
+import confetti from 'canvas-confetti';
 import { profileData } from '../data/portfolioData';
 import { GithubIcon, LinkedinIcon, TwitterIcon } from './SocialIcons';
-import { ScrollReveal } from './ScrollReveal';
 
 export const Contact = () => {
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [copied, setCopied] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleCopy = () => {
+  const handleCopyEmail = () => {
     navigator.clipboard.writeText(profileData.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
@@ -17,184 +17,241 @@ export const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.message) return;
+    if (!formData.name || !formData.email || !formData.message) return;
+
+    // Subtle celebration confetti with sage colors
+    confetti({
+      particleCount: 50,
+      spread: 60,
+      origin: { y: 0.6 },
+      colors: ['#8BC5A4', '#C9D8C5', '#F5F5F3']
+    });
+
     setSubmitted(true);
-    setForm({ name: '', email: '', message: '' });
+    setFormData({ name: '', email: '', subject: '', message: '' });
     setTimeout(() => setSubmitted(false), 5000);
   };
 
-  const socialLinks = [
-    { href: profileData.github, icon: GithubIcon, label: 'GitHub' },
-    { href: profileData.linkedin, icon: LinkedinIcon, label: 'LinkedIn' },
-    { href: profileData.twitter, icon: TwitterIcon, label: 'Twitter' }
-  ];
-
   return (
-    <section id="contact" style={{ padding: 'var(--section-pad) 0' }}>
+    <section id="contact" style={{ padding: '7rem 0' }}>
       <div className="container">
-        <ScrollReveal>
-          <span className="section-label">Contact</span>
-          <h2
-            style={{
-              fontSize: 'clamp(2rem, 4.5vw, 3rem)',
-              fontWeight: 700,
-              letterSpacing: '-0.035em',
-              color: 'var(--text-primary)',
-              marginBottom: '0.5rem'
-            }}
-          >
-            Let's work together.
-          </h2>
-          <p className="section-description" style={{ marginBottom: '3rem' }}>
-            Have a project, role, or collaboration in mind? I'd love to hear from you.
+        <div style={{ textAlign: 'center' }}>
+          <h2 className="section-title">Get In Touch</h2>
+          <p className="section-subtitle">
+            Have a project idea, engineering role, or collaboration proposal? Send a message to connect.
           </p>
-        </ScrollReveal>
+        </div>
 
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '2rem',
-            alignItems: 'start'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '2.5rem',
+            alignItems: 'stretch'
           }}
         >
-          {/* Left — info & social */}
-          <ScrollReveal delay={0.1}>
-            <div className="card" style={{ padding: '2rem' }}>
-              <h3 style={{ fontSize: '1.15rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
-                Reach Out
+          {/* Quick Info & Social Card */}
+          <div className="ghibli-card" style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div>
+              <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.6rem' }}>
+                Contact & Channels
               </h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
-                Whether it's a technical discussion, job opportunity, or just a chat about engineering — I'm always open.
+              <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '2rem', fontSize: '0.95rem' }}>
+                Feel free to reach out via form or copy my direct email below. Always interested in technical discussions and opportunities.
               </p>
 
-              {/* Email copy */}
+              {/* Copy Email Tool */}
               <div
                 style={{
-                  background: 'rgba(255, 255, 255, 0.02)',
-                  border: '1px solid var(--border)',
-                  padding: '0.8rem 1rem',
-                  borderRadius: '10px',
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid var(--border-color)',
+                  padding: '0.9rem 1.2rem',
+                  borderRadius: '14px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  gap: '0.8rem',
-                  marginBottom: '1.5rem'
+                  marginBottom: '2rem'
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', minWidth: 0 }}>
-                  <Mail size={15} style={{ color: 'var(--accent)', flexShrink: 0 }} />
-                  <span style={{ fontSize: '0.88rem', color: 'var(--text-primary)', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                  <Mail size={18} style={{ color: 'var(--accent-primary)' }} />
+                  <span style={{ fontWeight: 500, color: 'var(--text-main)', fontSize: '0.92rem' }}>
                     {profileData.email}
                   </span>
                 </div>
+
                 <button
-                  onClick={handleCopy}
-                  className="btn-ghost"
-                  style={{ padding: '0.3rem 0.65rem', fontSize: '0.75rem', flexShrink: 0 }}
+                  onClick={handleCopyEmail}
+                  className="btn-ghibli-outline"
+                  style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem' }}
                 >
-                  {copied
-                    ? <><Check size={12} style={{ color: 'var(--accent)' }} /><span>Copied</span></>
-                    : <><Copy size={12} /><span>Copy</span></>
-                  }
+                  {copied ? (
+                    <>
+                      <Check size={14} style={{ color: 'var(--accent-primary)' }} />
+                      <span>Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={14} />
+                      <span>Copy</span>
+                    </>
+                  )}
                 </button>
               </div>
 
-              {/* Socials */}
-              <h4 style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.75rem', letterSpacing: '0.02em' }}>
-                Connect
-              </h4>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                {socialLinks.map(({ href, icon: Icon, label }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-ghost"
-                    style={{ padding: '0.5rem 0.85rem', fontSize: '0.82rem' }}
-                    title={label}
-                  >
-                    <Icon size={15} />
-                    <span>{label}</span>
-                  </a>
-                ))}
-              </div>
-
-              <div style={{ marginTop: '1.5rem', fontSize: '0.8rem', color: 'var(--text-tertiary)' }}>
-                Response time: usually within 24 hours.
+              {/* Social Channels */}
+              <div>
+                <h4 style={{ fontSize: '0.95rem', color: 'var(--accent-primary)', fontWeight: 600, marginBottom: '1rem', fontFamily: 'var(--font-title)' }}>
+                  Social Profiles
+                </h4>
+                <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
+                  {profileData.socials?.github && (
+                    <a
+                      href={profileData.socials.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-ghibli-outline"
+                      style={{ padding: '0.5rem 0.9rem', fontSize: '0.85rem' }}
+                    >
+                      <GithubIcon size={16} />
+                      <span>GitHub</span>
+                    </a>
+                  )}
+                  {profileData.socials?.linkedin && (
+                    <a
+                      href={profileData.socials.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-ghibli-outline"
+                      style={{ padding: '0.5rem 0.9rem', fontSize: '0.85rem' }}
+                    >
+                      <LinkedinIcon size={16} />
+                      <span>LinkedIn</span>
+                    </a>
+                  )}
+                  {profileData.socials?.twitter && (
+                    <a
+                      href={profileData.socials.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-ghibli-outline"
+                      style={{ padding: '0.5rem 0.9rem', fontSize: '0.85rem' }}
+                    >
+                      <TwitterIcon size={16} />
+                      <span>Twitter</span>
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
-          </ScrollReveal>
 
-          {/* Right — form */}
-          <ScrollReveal delay={0.2}>
-            <div className="card" style={{ padding: '2rem' }}>
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
-                <div>
-                  <label className="form-label">Name *</label>
-                  <input
-                    type="text"
-                    required
-                    value={form.name}
-                    onChange={e => setForm({ ...form, name: e.target.value })}
-                    placeholder="Your name"
-                    className="form-input"
-                  />
-                </div>
-
-                <div>
-                  <label className="form-label">Email *</label>
-                  <input
-                    type="email"
-                    required
-                    value={form.email}
-                    onChange={e => setForm({ ...form, email: e.target.value })}
-                    placeholder="name@company.com"
-                    className="form-input"
-                  />
-                </div>
-
-                <div>
-                  <label className="form-label">Message *</label>
-                  <textarea
-                    rows={4}
-                    required
-                    value={form.message}
-                    onChange={e => setForm({ ...form, message: e.target.value })}
-                    placeholder="Tell me about your project or opportunity..."
-                    className="form-input"
-                    style={{ resize: 'vertical' }}
-                  />
-                </div>
-
-                <button type="submit" className="btn-primary" style={{ justifyContent: 'center', marginTop: '0.25rem' }}>
-                  <Send size={15} />
-                  <span>Send Message</span>
-                </button>
-
-                {submitted && (
-                  <div
-                    style={{
-                      background: 'var(--accent-muted)',
-                      border: '1px solid var(--border-hover)',
-                      color: 'var(--accent)',
-                      padding: '0.7rem 1rem',
-                      borderRadius: '8px',
-                      textAlign: 'center',
-                      fontSize: '0.85rem',
-                      fontWeight: 500,
-                      animation: 'fadeInUp 0.3s var(--ease-out)'
-                    }}
-                  >
-                    ✓ Message sent! I'll get back to you shortly.
-                  </div>
-                )}
-              </form>
+            <div style={{ marginTop: '2rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+              ⚡ Response time: Usually within 24 hours
             </div>
-          </ScrollReveal>
+          </div>
+
+          {/* Contact Form */}
+          <div className="ghibli-card" style={{ padding: '2.5rem' }}>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: 500 }}>
+                  Your Name *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="John Doe"
+                  style={{
+                    width: '100%',
+                    padding: '0.8rem 1rem',
+                    borderRadius: '10px',
+                    border: '1px solid var(--border-color)',
+                    background: 'rgba(15, 23, 32, 0.6)',
+                    color: 'var(--text-main)',
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '0.92rem',
+                    outline: 'none'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: 500 }}>
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="name@company.com"
+                  style={{
+                    width: '100%',
+                    padding: '0.8rem 1rem',
+                    borderRadius: '10px',
+                    border: '1px solid var(--border-color)',
+                    background: 'rgba(15, 23, 32, 0.6)',
+                    color: 'var(--text-main)',
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '0.92rem',
+                    outline: 'none'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: 500 }}>
+                  Message *
+                </label>
+                <textarea
+                  rows={4}
+                  required
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  placeholder="Describe your inquiry..."
+                  style={{
+                    width: '100%',
+                    padding: '0.8rem 1rem',
+                    borderRadius: '10px',
+                    border: '1px solid var(--border-color)',
+                    background: 'rgba(15, 23, 32, 0.6)',
+                    color: 'var(--text-main)',
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '0.92rem',
+                    outline: 'none',
+                    resize: 'vertical'
+                  }}
+                />
+              </div>
+
+              <button type="submit" className="btn-ghibli" style={{ justifyContent: 'center', marginTop: '0.5rem' }}>
+                <Send size={16} />
+                <span>Send Message</span>
+              </button>
+
+              {submitted && (
+                <div
+                  style={{
+                    background: 'rgba(139, 197, 164, 0.12)',
+                    border: '1px solid var(--border-hover)',
+                    color: 'var(--accent-primary)',
+                    padding: '0.8rem',
+                    borderRadius: '10px',
+                    textAlign: 'center',
+                    fontSize: '0.88rem',
+                    fontWeight: 500
+                  }}
+                >
+                  ✓ Message sent successfully! I will reply shortly.
+                </div>
+              )}
+            </form>
+          </div>
         </div>
       </div>
     </section>
   );
 };
+

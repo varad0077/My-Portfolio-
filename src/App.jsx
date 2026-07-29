@@ -1,35 +1,38 @@
 import React from 'react';
-import './App.css';
-import { GradientMesh } from './components/GradientMesh';
+import { GhibliCanvas } from './components/GhibliCanvas';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
-import { Skills } from './components/Skills';
+import { TechGarden } from './components/TechGarden';
 import { Projects } from './components/Projects';
 import { Timeline } from './components/Timeline';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
-export default function App() {
+export function App() {
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
-      {/* Ambient gradient mesh background */}
-      <GradientMesh />
+      {/* Background Interactive Ambient Spore Canvas */}
+      <GhibliCanvas />
 
-      {/* Floating navigation */}
+      {/* Floating Glass Navbar */}
       <Navbar />
 
-      {/* Main content */}
+      {/* Main Content Layout */}
       <main style={{ position: 'relative', zIndex: 10 }}>
         <Hero />
         <About />
-        <Skills />
+        <TechGarden />
         <Projects />
         <Timeline />
         <Contact />
       </main>
 
+      {/* Footer */}
       <Footer />
     </div>
   );
 }
+
+export default App;
+
