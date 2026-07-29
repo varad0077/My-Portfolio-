@@ -1,13 +1,73 @@
-import React from 'react';
-import { ArrowRight, Download, Mail } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ArrowRight, Download, Mail, ChevronDown } from 'lucide-react';
 import { profileData } from '../data/portfolioData';
 
+// Animated number counter
+const useCounter = (target, duration = 2000, start = false) => {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!start) return;
+    const numTarget = parseInt(String(target).replace(/[^0-9]/g, ''), 10) || 0;
+    let startTime = null;
+    const step = (ts) => {
+      if (!startTime) startTime = ts;
+      const progress = Math.min((ts - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * numTarget));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [target, duration, start]);
+  return count;
+};
+
+const StatItem = ({ label, value, delay, started }) => {
+  const numericPart = String(value).replace(/[^0-9]/g, '');
+  const suffix = String(value).replace(/[0-9,]/g, '');
+  const count = useCounter(numericPart, 2200, started);
+
+  return (
+    <div
+      style={{
+        opacity: started ? 1 : 0,
+        transform: started ? 'translateY(0)' : 'translateY(18px)',
+        transition: `all 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`
+      }}
+    >
+      <div
+        style={{
+          fontSize: '1.6rem',
+          fontWeight: 800,
+          color: 'var(--text-main)',
+          fontFamily: 'var(--font-title)',
+          letterSpacing: '-0.02em'
+        }}
+      >
+        {count.toLocaleString()}{suffix}
+      </div>
+      <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '0.1rem' }}>
+        {label}
+      </div>
+    </div>
+  );
+};
+
 export const Hero = () => {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setVisible(true), 250);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const greeting = "Hi, I'm";
+  const words = greeting.split(' ');
+
   return (
     <section
       id="hero"
       style={{
-        minHeight: '92vh',
+        minHeight: '100vh',
         paddingTop: '9rem',
         paddingBottom: '5rem',
         display: 'flex',
@@ -26,7 +86,7 @@ export const Hero = () => {
         >
           {/* Main Hero Content */}
           <div>
-            {/* Minimal Status Badge */}
+            {/* Status Badge — animated in */}
             <div
               style={{
                 display: 'inline-flex',
@@ -40,7 +100,10 @@ export const Hero = () => {
                 color: 'var(--accent-primary)',
                 fontWeight: 500,
                 marginBottom: '1.8rem',
-                backdropFilter: 'blur(8px)'
+                backdropFilter: 'blur(8px)',
+                opacity: visible ? 1 : 0,
+                transform: visible ? 'translateY(0)' : 'translateY(16px)',
+                transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s'
               }}
             >
               <span
@@ -48,14 +111,14 @@ export const Hero = () => {
                   width: '6px',
                   height: '6px',
                   borderRadius: '50%',
-                  backgroundColor: 'var(--accent-primary)'
+                  backgroundColor: '#4ADE80',
+                  animation: 'pulseGlow 2s ease-in-out infinite'
                 }}
-                className="animate-pulse-glow"
               />
               <span>{profileData.status}</span>
             </div>
 
-            {/* Name & Title */}
+            {/* Name — word-by-word stagger reveal */}
             <h1
               style={{
                 fontSize: 'clamp(2.5rem, 5vw, 3.8rem)',
@@ -66,9 +129,50 @@ export const Hero = () => {
                 letterSpacing: '-0.03em'
               }}
             >
-              Hi, I'm <span style={{ color: 'var(--accent-primary)' }}>{profileData.name}</span>
+              {words.map((word, i) => (
+                <span
+                  key={i}
+                  style={{
+                    display: 'inline-block',
+                    overflow: 'hidden',
+                    marginRight: '0.25em',
+                    verticalAlign: 'top'
+                  }}
+                >
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      opacity: visible ? 1 : 0,
+                      transform: visible ? 'translateY(0)' : 'translateY(100%)',
+                      transition: `all 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${0.2 + i * 0.08}s`
+                    }}
+                  >
+                    {word}
+                  </span>
+                </span>
+              ))}
+              <span
+                style={{
+                  display: 'inline-block',
+                  overflow: 'hidden',
+                  verticalAlign: 'top'
+                }}
+              >
+                <span
+                  style={{
+                    display: 'inline-block',
+                    color: 'var(--accent-primary)',
+                    opacity: visible ? 1 : 0,
+                    transform: visible ? 'translateY(0)' : 'translateY(100%)',
+                    transition: `all 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${0.2 + words.length * 0.08}s`
+                  }}
+                >
+                  {profileData.name}
+                </span>
+              </span>
             </h1>
 
+            {/* Title */}
             <h2
               style={{
                 fontSize: 'clamp(1.25rem, 2.5vw, 1.6rem)',
@@ -76,43 +180,51 @@ export const Hero = () => {
                 color: 'var(--accent-secondary)',
                 fontWeight: 600,
                 marginBottom: '1.2rem',
-                letterSpacing: '-0.01em'
+                letterSpacing: '-0.01em',
+                opacity: visible ? 1 : 0,
+                transform: visible ? 'translateY(0)' : 'translateY(16px)',
+                transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.55s'
               }}
             >
               {profileData.title}
             </h2>
 
+            {/* Tagline */}
             <p
               style={{
                 fontSize: '1.05rem',
                 color: 'var(--text-muted)',
                 lineHeight: 1.7,
                 marginBottom: '2.5rem',
-                maxWidth: '520px'
+                maxWidth: '520px',
+                opacity: visible ? 1 : 0,
+                transform: visible ? 'translateY(0)' : 'translateY(16px)',
+                transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.65s'
               }}
             >
               {profileData.tagline}
             </p>
 
-            {/* 2 CTA Buttons */}
+            {/* CTA Buttons */}
             <div
               style={{
                 display: 'flex',
                 flexWrap: 'wrap',
                 gap: '1rem',
-                marginBottom: '3rem'
+                marginBottom: '3rem',
+                opacity: visible ? 1 : 0,
+                transform: visible ? 'translateY(0)' : 'translateY(16px)',
+                transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.75s'
               }}
             >
               <a href="#projects" className="btn-ghibli">
                 <span>View Projects</span>
                 <ArrowRight size={16} />
               </a>
-
               <a href="#contact" className="btn-ghibli-outline">
                 <Mail size={16} />
                 <span>Get In Touch</span>
               </a>
-
               <a
                 href={profileData.resumeUrl}
                 download
@@ -124,11 +236,12 @@ export const Hero = () => {
               </a>
             </div>
 
-            {/* Statistics */}
+            {/* Animated Statistics */}
             <div
+              className="hero-stats-grid"
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+                gridTemplateColumns: 'repeat(4, 1fr)',
                 gap: '1.5rem',
                 paddingTop: '1.5rem',
                 borderTop: '1px solid var(--border-color)',
@@ -136,28 +249,26 @@ export const Hero = () => {
               }}
             >
               {profileData.stats.map((st, idx) => (
-                <div key={idx}>
-                  <div
-                    style={{
-                      fontSize: '1.6rem',
-                      fontWeight: 800,
-                      color: 'var(--text-main)',
-                      fontFamily: 'var(--font-title)',
-                      letterSpacing: '-0.02em'
-                    }}
-                  >
-                    {st.value}
-                  </div>
-                  <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '0.1rem' }}>
-                    {st.label}
-                  </div>
-                </div>
+                <StatItem
+                  key={idx}
+                  label={st.label}
+                  value={st.value}
+                  delay={0.85 + idx * 0.12}
+                  started={visible}
+                />
               ))}
             </div>
           </div>
 
-          {/* Clean Blended Artwork Frame */}
-          <div style={{ position: 'relative' }}>
+          {/* Artwork Frame with enhanced float + hover */}
+          <div
+            style={{
+              position: 'relative',
+              opacity: visible ? 1 : 0,
+              transform: visible ? 'translateY(0) scale(1)' : 'translateY(24px) scale(0.96)',
+              transition: 'all 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s'
+            }}
+          >
             <div
               className="ghibli-card animate-float"
               style={{
@@ -184,7 +295,15 @@ export const Hero = () => {
                     borderRadius: '18px',
                     display: 'block',
                     filter: 'saturate(0.7) brightness(0.85)',
-                    transition: 'filter 0.3s ease'
+                    transition: 'filter 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.filter = 'saturate(0.85) brightness(0.92)';
+                    e.currentTarget.style.transform = 'scale(1.03)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.filter = 'saturate(0.7) brightness(0.85)';
+                    e.currentTarget.style.transform = 'scale(1)';
                   }}
                 />
                 <div
@@ -200,7 +319,27 @@ export const Hero = () => {
           </div>
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '2rem',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '0.25rem',
+          opacity: visible ? 0.35 : 0,
+          transition: 'opacity 1s ease 1.8s'
+        }}
+      >
+        <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+          Scroll
+        </span>
+        <ChevronDown size={16} style={{ color: 'var(--text-muted)', animation: 'bounceDown 2s ease-in-out infinite' }} />
+      </div>
     </section>
   );
 };
-

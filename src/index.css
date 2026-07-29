@@ -20,6 +20,8 @@
   --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-title: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-theme="totoro"],
@@ -73,22 +75,47 @@ h1, h2, h3, h4 {
   font-family: var(--font-title);
 }
 
+/* Selection */
+::selection {
+  background: rgba(139, 197, 164, 0.25);
+  color: var(--text-main);
+}
+
 /* Custom Minimal Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-primary);
 }
 
-/* Elevated Card Style */
+/* =========================================================
+   SCROLL REVEAL ANIMATION SYSTEM
+   ========================================================= */
+
+.sr {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  will-change: opacity, transform;
+}
+
+.sr.sr-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================================================
+   ELEVATED CARD STYLE
+   ========================================================= */
+
 .ghibli-card {
   background: var(--bg-card);
   backdrop-filter: blur(16px);
@@ -96,17 +123,39 @@ h1, h2, h3, h4 {
   border: 1px solid var(--border-color);
   border-radius: 20px;
   box-shadow: 0 10px 30px var(--shadow-color);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.4s var(--ease-out);
+  position: relative;
+}
+
+/* Subtle noise texture for depth */
+.ghibli-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0.012;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ghibli-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .ghibli-card:hover {
   background: var(--bg-card-hover);
   border-color: var(--border-hover);
-  transform: translateY(-3px);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), 0 0 30px var(--glow-color);
 }
 
-/* Premium Primary Button (Soft Sage Gradient) */
+/* =========================================================
+   PREMIUM BUTTONS
+   ========================================================= */
+
+/* Primary Button (Soft Sage Gradient) */
 .btn-ghibli {
   display: inline-flex;
   align-items: center;
@@ -120,17 +169,35 @@ h1, h2, h3, h4 {
   border: none;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s var(--ease-out);
   box-shadow: 0 2px 10px rgba(139, 197, 164, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ghibli::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .btn-ghibli:hover {
-  opacity: 0.93;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(139, 197, 164, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(139, 197, 164, 0.3);
 }
 
-/* Premium Secondary Button (Transparent with Minimal Border) */
+.btn-ghibli:hover::after {
+  opacity: 1;
+}
+
+.btn-ghibli:active {
+  transform: translateY(0);
+}
+
+/* Secondary Button (Transparent with Minimal Border) */
 .btn-ghibli-outline {
   display: inline-flex;
   align-items: center;
@@ -145,20 +212,35 @@ h1, h2, h3, h4 {
   cursor: pointer;
   text-decoration: none;
   backdrop-filter: blur(8px);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s var(--ease-out);
 }
 
 .btn-ghibli-outline:hover {
   background: rgba(255, 255, 255, 0.07);
   border-color: rgba(139, 197, 164, 0.3);
   color: var(--text-main);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Subtle Micro-Animations */
+.btn-ghibli-outline:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   KEYFRAME ANIMATIONS
+   ========================================================= */
+
 @keyframes floatSlow {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-4px) rotate(0.5deg); }
+  50% { transform: translateY(-7px) rotate(-0.3deg); }
+  75% { transform: translateY(-3px) rotate(0.2deg); }
 }
 
 @keyframes pulseGlow {
@@ -166,15 +248,86 @@ h1, h2, h3, h4 {
   50% { opacity: 1; }
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes bounceDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(139, 197, 164, 0.15); }
+  50% { box-shadow: 0 0 20px rgba(139, 197, 164, 0.3); }
+}
+
+@keyframes fillBar {
+  from { width: 0; }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .animate-float {
-  animation: floatSlow 8s ease-in-out infinite;
+  animation: floatGentle 8s ease-in-out infinite;
 }
 
 .animate-pulse-glow {
   animation: pulseGlow 4s ease-in-out infinite;
 }
 
-/* Section Titles & Layout Spacing */
+/* =========================================================
+   SECTION TITLES & LAYOUT
+   ========================================================= */
+
 .section-title {
   font-size: clamp(2rem, 4vw, 2.75rem);
   font-weight: 700;
@@ -201,3 +354,168 @@ h1, h2, h3, h4 {
   padding: 0 1rem;
 }
 
+/* =========================================================
+   PROJECT IMAGE HOVER ZOOM
+   ========================================================= */
+
+.project-image-wrap {
+  position: relative;
+  overflow: hidden;
+  height: 200px;
+}
+
+.project-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.85) brightness(0.9);
+  transition: transform 0.6s var(--ease-out), filter 0.5s ease;
+}
+
+.ghibli-card:hover .project-image-wrap img {
+  transform: scale(1.06);
+  filter: saturate(0.95) brightness(0.95);
+}
+
+/* =========================================================
+   MODAL ANIMATIONS
+   ========================================================= */
+
+.modal-backdrop {
+  animation: fadeIn 0.25s ease;
+}
+
+.modal-content {
+  animation: scaleIn 0.35s var(--ease-out);
+}
+
+/* =========================================================
+   FORM INPUT FOCUS ANIMATIONS
+   ========================================================= */
+
+.form-input-animated {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: rgba(15, 23, 32, 0.6);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.form-input-animated::placeholder {
+  color: rgba(163, 176, 165, 0.5);
+}
+
+.form-input-animated:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(139, 197, 164, 0.1);
+  background: rgba(15, 23, 32, 0.8);
+}
+
+/* =========================================================
+   MOBILE OVERLAY MENU
+   ========================================================= */
+
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(15, 23, 32, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease-out);
+}
+
+.mobile-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-overlay a {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text-main);
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s var(--ease-out), color 0.2s ease;
+}
+
+.mobile-overlay.open a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mobile-overlay a:hover {
+  color: var(--accent-primary);
+}
+
+.mobile-overlay.open a:nth-child(1) { transition-delay: 0.08s; }
+.mobile-overlay.open a:nth-child(2) { transition-delay: 0.14s; }
+.mobile-overlay.open a:nth-child(3) { transition-delay: 0.20s; }
+.mobile-overlay.open a:nth-child(4) { transition-delay: 0.26s; }
+.mobile-overlay.open a:nth-child(5) { transition-delay: 0.32s; }
+
+/* =========================================================
+   NAV LINK STYLES
+   ========================================================= */
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  font-family: var(--font-title);
+  font-size: 0.92rem;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--text-main);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 1.5px;
+  background: var(--accent-primary);
+  transition: width 0.3s var(--ease-out);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* =========================================================
+   RESPONSIVE MEDIA QUERIES
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .desktop-links {
+    display: none !important;
+  }
+  .mobile-toggle {
+    display: block !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}

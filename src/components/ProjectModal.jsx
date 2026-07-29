@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { X, ExternalLink, CheckCircle } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
 
 export const ProjectModal = ({ project, onClose }) => {
+  // Lock body scroll and Escape key close
+  useEffect(() => {
+    if (!project) return;
+    document.body.style.overflow = 'hidden';
+    const handleEsc = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handleEsc);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [project, onClose]);
+
   if (!project) return null;
 
   return (
     <div
+      className="modal-backdrop"
       style={{
         position: 'fixed',
         top: 0,
@@ -25,7 +38,7 @@ export const ProjectModal = ({ project, onClose }) => {
       onClick={onClose}
     >
       <div
-        className="ghibli-card"
+        className="ghibli-card modal-content"
         style={{
           width: '100%',
           maxWidth: '720px',
@@ -42,6 +55,7 @@ export const ProjectModal = ({ project, onClose }) => {
         {/* Close Button */}
         <button
           onClick={onClose}
+          aria-label="Close modal"
           style={{
             position: 'absolute',
             top: '1.2rem',
@@ -56,7 +70,8 @@ export const ProjectModal = ({ project, onClose }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            transition: 'all 0.2s ease'
+            transition: 'all 0.2s ease',
+            zIndex: 5
           }}
         >
           <X size={18} />
@@ -153,4 +168,3 @@ export const ProjectModal = ({ project, onClose }) => {
     </div>
   );
 };
-
