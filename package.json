@@ -1,7 +1,9 @@
 {
   "name": "my-portfolio",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Studio Ghibli-themed Software Engineer Portfolio with HTML5 Canvas physics and Web Audio API synthesizer",
+  "homepage": "https://varads-portfolio.onrender.com",
   "type": "module",
   "scripts": {
     "dev": "vite",
